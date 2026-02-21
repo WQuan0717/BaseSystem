@@ -15,17 +15,9 @@ BaseSystem 提供了一套完整的软件工程生命周期标准化流程，包
 
 ## 技术栈
 
-### Web 项目
-- 前端: Vue 3 + Vite + TypeScript
-- 后端: Node.js + Express
-- 数据库: PostgreSQL + Prisma
-- 缓存: Redis
+**核心:** Vue 3 + Vite + TypeScript | Python + FastAPI | PostgreSQL + Prisma
 
-### AI/RAG 项目
-- 后端: Python + FastAPI
-- 数据库: PostgreSQL + pgvector
-- AI 框架: LangChain/LlamaIndex
-- 前端: Vue 3 或 Streamlit
+**按需:** pgvector | Redis | Elasticsearch | LangChain | LlamaIndex | LangGraph
 
 ## 项目结构
 

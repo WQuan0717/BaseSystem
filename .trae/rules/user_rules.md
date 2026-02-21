@@ -24,9 +24,9 @@ Use SOLO Coder mode with sub-agents. Invoke `se-lifecycle` SKILL for workflow de
 
 ## Tech Stack
 
-**Web Projects:** Vue 3 + Vite + TypeScript | Node.js + Express | PostgreSQL + Prisma | Redis
+**Core:** Vue 3 + Vite + TypeScript | Python + FastAPI | PostgreSQL + Prisma
 
-**AI/RAG Projects:** Python + FastAPI | PostgreSQL + pgvector | LangChain/LlamaIndex | Vue 3 or Streamlit
+**Optional:** pgvector | Redis | Elasticsearch | LangChain | LlamaIndex | LangGraph
 
 ## Working Style
 - Use TodoWrite for complex tasks
