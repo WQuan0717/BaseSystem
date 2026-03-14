@@ -42,3 +42,11 @@ tmp/
 temp/
 *.tmp
 *.temp
+
+# Trae Platform
+.trae/skills/*/scripts/__pycache__/
+.trae/skills/*/scripts/*.pyc
+
+# Test outputs
+tests/e2e/test-results/
+tests/e2e/playwright-report/
