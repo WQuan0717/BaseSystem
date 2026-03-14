@@ -50,3 +50,7 @@ temp/
 # Test outputs
 tests/e2e/test-results/
 tests/e2e/playwright-report/
+
+# Unpacked files (Word, ZIP, etc.)
+*_unpacked/
+*_extracted/
