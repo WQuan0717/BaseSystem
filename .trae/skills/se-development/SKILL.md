@@ -19,12 +19,34 @@ Professional knowledge for development phase. Transform DetailedDesign.md into w
 - Coverage should be ≥ 80%
 - Test behavior, not implementation
 
-### Principle 3: Clean Code
+### Principle 3: Frontend Change Verification
+**MANDATORY: After ANY frontend modification, run:**
+1. Type check: `npm run type-check`
+2. ESLint: `npm run lint`
+3. Unit tests: `npm test`
+4. Playwright E2E tests: `cd tests/e2e && playwright test`
+5. Check screenshots in `tests/e2e/screenshots/`
+
+### Principle 4: Port Conflict Resolution
+**Before starting services, check for port conflicts:**
+```bash
+# Check port 8000 (backend)
+netstat -ano | findstr :8000
+
+# Check port 3000 (frontend)
+netstat -ano | findstr :3000
+
+# If port is occupied, kill the process and restart
+# DO NOT change to a different port
+taskkill /F /PID <process_id>
+```
+
+### Principle 5: Clean Code
 - Follow project conventions
 - Meaningful names, single responsibility
 - Small functions, clear intent
 
-### Principle 4: Incremental Delivery
+### Principle 6: Incremental Delivery
 - Commit frequently with clear messages
 - Each commit should be a working state
 - Use feature branches for isolation

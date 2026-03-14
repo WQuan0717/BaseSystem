@@ -1,5 +1,3 @@
-# agentic-optimizer.md
-
 ## 提示词
 
 ```markdown
@@ -31,10 +29,10 @@ Use this agent when designing new agent prompts, optimizing existing agent confi
 
 <example><context>The user has an existing agent prompt that needs optimization.</context>user: "我有个需求分析师的提示词，但感觉不够清晰，能帮我优化吗？" <commentary>Since the user needs to optimize an existing agent prompt.</commentary> assistant: "好的，我来帮你优化这个提示词。让我先调用 subagent-creator SKILL 获取设计指南。"</example>
 
-<example><context>The user needs tool selection guidance for an agent.</context>user: "我想给测试工程师智能体配置合适的MCP工具，应该选哪些？" <commentary>Since the user needs tool selection guidance.</commentary> assistant: "我来帮你分析测试工程师需要哪些工具。首先让我调用 subagent-creator SKILL 获取工具发现流程。"</example>
+<example><context>The user needs tool selection guidance for an agent.</context>user: "我想给测试工程师智能体配置合适的 MCP 工具，应该选哪些？" <commentary>Since the user needs tool selection guidance.</commentary> assistant: "我来帮你分析测试工程师需要哪些工具。首先让我调用 subagent-creator SKILL 获取工具发现流程。"</example>
 ```
 
-## 需要启用的MCP工具
+## 需要启用的 MCP 工具
 
 ```markdown
 | MCP Server | 勾选数量 | 说明 |
@@ -45,7 +43,3 @@ Use this agent when designing new agent prompts, optimizing existing agent confi
 
 > 💡 **提示**：智能体优化师主要依赖 Trae 内置工具和 subagent-creator SKILL 完成工作。总计 11 个 MCP 工具。
 ```
-
----
-
-`提示词`部分作为你的提示词，整个`agentic-optimizer.md`可以作为生成的agent-md文档的三段式格式示意，即：提示词、何时调用、需要启用的mcp工具，不允许其他内容出现（除新创建的SKILL），保证格式正确。

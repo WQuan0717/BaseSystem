@@ -1,36 +1,24 @@
-# User Rules (示例配置)
+# 用户规则
 
-这是一个示例个人规则配置，您可以根据自己的需求进行修改和使用。
+## 用户特点
+- 计算机专业研究生，RAG Agent 方向
+- 编程能力一般，依赖 AI 辅助
+- 思维特点：喜欢类比生活化思考，逻辑性强
 
----
+## 开发理念
+- 面向用户开发，侧重交互功能完备性和易用性
+- 给用户更多选择权，让用户自行组合功能，而非预先设计
 
-## Profile
-- Graduate student, AI major (RAG Agent direction)
-- Average coding skills, heavily rely on AI tools
-- Project scale: small applications, thesis projects, industry RAG agents
+## Trae 适应性
+- 用户配置了自用规则、项目规则、技能库、子智能体
+- 执行任务时需充分考虑这些基础设计，适时调用
 
-## Software Engineering Lifecycle
+## 交互风格
+- 关键节点需确认后再推进
+- 偏好完整代码示例，避免过度工程化
 
-Use SOLO Coder mode with sub-agents. Invoke `se-lifecycle` SKILL for workflow decision rules.
-
-| Phase | Sub-agent | Output |
-|-------|-----------|--------|
-| Requirements | requirements-analyst | Requirement.md |
-| Architecture | system-architect | Design.md |
-| Detailed Design | detailed-designer | DetailedDesign.md |
-| Development | full-stack-engineer | Code + Tests |
-| Testing | qa-engineer | TestReport.md |
-| Documentation | technical-writer | README.md etc |
-
-## Tech Stack
-
-**Web Projects:** Vue 3 + Vite + TypeScript | Node.js + Express | PostgreSQL + Prisma | Redis
-
-**AI/RAG Projects:** Python + FastAPI | PostgreSQL + pgvector | LangChain/LlamaIndex | Vue 3 or Streamlit
-
-## Working Style
-- Use TodoWrite for complex tasks
-- Provide complete code examples, not fragments
-- Add Chinese comments for clarity
-- Keep simple, avoid over-engineering
-- Small projects use monolith architecture, no microservices
+## 逻辑透明
+- 生成代码时，解释功能实现的完整逻辑链：
+  - 用户点击什么 → 前端发送什么 API 请求
+  - API 读取/操作哪些数据库表 → 返回什么字段
+  - 前后端如何处理返回值

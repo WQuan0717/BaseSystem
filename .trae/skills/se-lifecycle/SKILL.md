@@ -11,9 +11,9 @@ Shared knowledge base for all software engineering agents. Provides lifecycle co
 
 ### Full Lifecycle (New Project)
 Trigger: User wants to build a new system from scratch
-- "帮我开发一个XXX系统"
-- "我想做一个XXX应用"
-- "帮我实现一个XXX平台"
+- "帮我开发一个 XXX 系统"
+- "我想做一个 XXX 应用"
+- "帮我实现一个 XXX 平台"
 → Start from Requirements phase
 
 ### Partial Lifecycle (Existing Project)
@@ -29,7 +29,7 @@ Trigger: User wants to build a new system from scratch
 | User Request | Action |
 |--------------|--------|
 | "解释这段代码" | Direct answer |
-| "修复这个bug" | Direct fix |
+| "修复这个 bug" | Direct fix |
 | "优化这个函数" | Direct optimize |
 | "添加一个字段" | Direct modify |
 | "这个报错怎么解决" | Direct debug |
@@ -44,6 +44,19 @@ User Request
     │
     └─ Small task? ──────────────────→ Direct execute
 ```
+
+### Skill Invocation Priority
+**CRITICAL: Always check and invoke appropriate Skills before attempting to solve:**
+1. Check available Skills: `ls .trae/skills/`
+2. Review Skill documentation: `cat .trae/skills/se-*/SKILL.md`
+3. Invoke relevant Skill for the task
+4. Only proceed with direct solution if no suitable Skill exists
+
+**Example:**
+- Task: "设计数据库"
+- Check: se-detailed-design Skill available
+- Action: `invoke se-detailed-design`
+- Result: Uses generate_schema.py script and templates
 
 ## Phase Definition
 

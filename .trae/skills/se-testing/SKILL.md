@@ -1,8 +1,3 @@
----
-name: se-testing
-description: Testing knowledge for software engineering. Provides methods for API testing, E2E testing, test case design, and TestReport.md generation.
----
-
 # Testing
 
 Professional knowledge for testing phase. Validate code quality through API testing, E2E testing, and generate TestReport.md.
@@ -29,256 +24,263 @@ Professional knowledge for testing phase. Validate code quality through API test
 - P0 features get most testing effort
 - Focus on critical user paths
 
-### Principle 5: Automation First
-- Automate all repetitive tests
-- API tests should be fully automated
-- E2E tests for critical flows
+## Test Case Design Methods
 
-## Test Types
+### 1. Equivalence Partitioning (等价类划分)
 
-| Type | Purpose | Tools |
-|------|---------|-------|
-| Unit Tests | Test individual functions | Jest, Vitest |
-| Integration Tests | Test module interactions | Jest, Supertest |
-| API Tests | Test API endpoints | Postman, curl |
-| E2E Tests | Test user flows | Playwright, Cypress |
-| Performance Tests | Test load and response | k6, Artillery |
+Divide input data into valid and invalid equivalence classes.
 
-## Test Case Design
+**Example: Username validation (6-20 characters)**
 
-### Test Case Template
+| Test Case | Input | Expected | Class |
+|-----------|-------|----------|-------|
+| TC-001 | "testuser" | Valid | Valid equivalence |
+| TC-002 | "ab" | Invalid | Too short |
+| TC-003 | "verylongusername123" | Invalid | Too long |
+| TC-004 | "test@user" | Invalid | Invalid characters |
+
+### 2. Boundary Value Analysis (边界值分析)
+
+Test at the boundaries of input domains.
+
+**Example: Age field (18-65)**
+
+| Test Case | Input | Expected | Boundary |
+|-----------|-------|----------|----------|
+| TC-001 | 17 | Invalid | Below minimum |
+| TC-002 | 18 | Valid | Minimum boundary |
+| TC-003 | 19 | Valid | Just above minimum |
+| TC-004 | 64 | Valid | Just below maximum |
+| TC-005 | 65 | Valid | Maximum boundary |
+| TC-006 | 66 | Invalid | Above maximum |
+
+### 3. Orthogonal Array Testing (正交实验法)
+
+For multi-factor combinations, use orthogonal arrays to reduce test cases.
+
+**Example: Login with different browsers and user roles**
+
+| Test Case | Browser | User Role | Network |
+|-----------|---------|-----------|---------|
+| TC-001 | Chrome | Admin | WiFi |
+| TC-002 | Firefox | User | 4G |
+| TC-003 | Safari | Guest | 3G |
+
+### 4. Error Guessing (错误推测法)
+
+Based on experience, guess where errors might occur.
+
+**Common error scenarios:**
+- Null/empty inputs
+- Special characters in input
+- Concurrent operations
+- Network failures
+- Database connection failures
+- Timeout scenarios
+
+### 5. State Transition Testing (状态转换测试)
+
+Test transitions between system states.
+
+**Example: Order status transitions**
+
+```
+Created → Paid → Shipped → Delivered
+   ↓        ↓       ↓         ↓
+Cancelled  Refund  Return   Complete
+```
+
+## Test Case Template
 
 ```markdown
-### TC-001: [Test Case Name]
+### TC-[ID]: [Test Name]
 
-**Priority**: P0/P1/P2
+**Module**: [Module Name]
 
-**Type**: Functional/API/E2E
+**Test Method**: [Equivalence/Boundary/Orthogonal/Error Guessing]
 
 **Preconditions**:
-- Condition 1
-- Condition 2
+- [Condition 1]
+- [Condition 2]
 
 **Test Data**:
 ```json
 {
-  "email": "test@example.com",
-  "password": "Test@123"
+  "field": "value"
 }
 ```
 
-**Steps**:
-1. Step 1
-2. Step 2
-3. Step 3
+**Test Steps**:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
 **Expected Result**:
-- Result 1
-- Result 2
+- [Expected 1]
+- [Expected 2]
 
-**Actual Result**:
-[To be filled during execution]
+**Actual Result**: [Fill after execution]
 
-**Status**: Pass/Fail/Blocked
+**Status**: ⬜ Pass ⬜ Fail ⬜ Blocked
 ```
 
-### Test Scenarios
+## Playwright E2E Testing
 
-**Authentication:**
-- TC-001: User registration with valid data
-- TC-002: User registration with duplicate email
-- TC-003: User login with valid credentials
-- TC-004: User login with invalid password
-- TC-005: Token refresh
+### Directory Structure
 
-**CRUD Operations:**
-- TC-010: Create resource with valid data
-- TC-011: Create resource with invalid data
-- TC-012: Read resource by ID
-- TC-013: Update resource
-- TC-014: Delete resource
+```
+tests/e2e/
+├── tests/
+│   ├── auth.spec.ts        # Authentication tests
+│   ├── user.spec.ts        # User management tests
+│   └── order.spec.ts       # Order flow tests
+├── screenshots/
+│   ├── auth/
+│   ├── user/
+│   └── order/
+├── videos/
+└── playwright.config.ts
+```
 
-**Edge Cases:**
-- TC-020: Empty input validation
-- TC-021: Maximum length validation
-- TC-022: Special characters handling
-- TC-023: Concurrent access
+### Frontend Change Verification
+
+**Mandatory check after ANY frontend modification:**
+
+```bash
+# 1. Run type check
+npm run type-check
+
+# 2. Run ESLint
+npm run lint
+
+# 3. Run unit tests
+npm test
+
+# 4. Run Playwright E2E tests
+cd tests/e2e
+playwright test
+
+# 5. Check screenshots for visual regressions
+# Screenshots saved in tests/e2e/screenshots/
+```
+
+### Screenshot Comparison
+
+```typescript
+// tests/e2e/tests/visual.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('visual regression - homepage', async ({ page }) => {
+  await page.goto('/');
+  
+  // Take screenshot and compare with baseline
+  await expect(page).toHaveScreenshot('homepage.png', {
+    fullPage: true,
+    maxDiffPixels: 100, // Allow small differences
+  });
+});
+```
 
 ## API Testing
 
-### Test Structure
+### Test Coverage Requirements
 
-```typescript
-describe('POST /api/v1/users', () => {
-  it('should create user with valid data', async () => {
-    const response = await request(app)
-      .post('/api/v1/users')
-      .send({
-        email: 'test@example.com',
-        password: 'Test@123',
-        name: 'Test User'
-      });
+| Layer | Minimum Coverage |
+|-------|-----------------|
+| Services | 90% |
+| Repositories | 80% |
+| Controllers | 80% |
+| API Endpoints | 100% |
 
-    expect(response.status).toBe(201);
-    expect(response.body.data.email).toBe('test@example.com');
-  });
+### API Test Example
 
-  it('should return 400 for invalid email', async () => {
-    const response = await request(app)
-      .post('/api/v1/users')
-      .send({
-        email: 'invalid-email',
-        password: 'Test@123'
-      });
+```python
+# tests/api/test_users.py
+import pytest
 
-    expect(response.status).toBe(400);
-    expect(response.body.errors).toBeDefined();
-  });
-});
+
+class TestUserAPI:
+    """User API tests with comprehensive coverage"""
+    
+    # Equivalence partitioning
+    def test_create_user_valid_data(self):
+        """Valid user creation"""
+        pass
+    
+    def test_create_user_invalid_email(self):
+        """Invalid email format"""
+        pass
+    
+    # Boundary value analysis
+    def test_create_user_username_min_length(self):
+        """Username at minimum length (3 chars)"""
+        pass
+    
+    def test_create_user_username_max_length(self):
+        """Username at maximum length (50 chars)"""
+        pass
+    
+    # Error guessing
+    def test_create_user_duplicate_email(self):
+        """Duplicate email should fail"""
+        pass
+    
+    def test_create_user_sql_injection(self):
+        """SQL injection attempt should fail"""
+        pass
 ```
 
-### API Test Checklist
-
-| Check | Description |
-|-------|-------------|
-| Status Code | Correct HTTP status |
-| Response Body | Correct data structure |
-| Headers | Correct headers |
-| Validation | Input validation works |
-| Authentication | Auth required endpoints |
-| Error Handling | Error responses correct |
-
-## E2E Testing
-
-### Playwright Example
-
-```typescript
-import { test, expect } from '@playwright/test';
-
-test('user can register and login', async ({ page }) => {
-  // Navigate to registration
-  await page.goto('/register');
-  
-  // Fill form
-  await page.fill('[name="email"]', 'test@example.com');
-  await page.fill('[name="password"]', 'Test@123');
-  await page.fill('[name="confirmPassword"]', 'Test@123');
-  
-  // Submit
-  await page.click('button[type="submit"]');
-  
-  // Verify redirect to dashboard
-  await expect(page).toHaveURL('/dashboard');
-  
-  // Logout
-  await page.click('[data-testid="logout"]');
-  
-  // Login
-  await page.goto('/login');
-  await page.fill('[name="email"]', 'test@example.com');
-  await page.fill('[name="password"]', 'Test@123');
-  await page.click('button[type="submit"]');
-  
-  // Verify logged in
-  await expect(page.locator('[data-testid="user-email"]'))
-    .toHaveText('test@example.com');
-});
-```
-
-### E2E Test Scenarios
-
-| Scenario | Priority |
-|----------|----------|
-| User registration flow | P0 |
-| User login flow | P0 |
-| Password reset flow | P1 |
-| Profile update flow | P1 |
-| Main business flow | P0 |
-
-## TestReport.md Template
+## Test Report Template
 
 ```markdown
-# 测试报告
+# Test Report
 
-## 1. 测试概览
+## Test Summary
 
-### 1.1 测试范围
-[测试覆盖的功能和模块]
+| Metric | Value |
+|--------|-------|
+| Total Test Cases | 0 |
+| Passed | 0 |
+| Failed | 0 |
+| Blocked | 0 |
+| Pass Rate | 0% |
 
-### 1.2 测试环境
-- 操作系统: [OS]
-- 浏览器: [Browser]
-- 数据库: [Database]
-- 测试时间: [Date]
+## Test Coverage
 
-### 1.3 测试统计
+| Module | Coverage |
+|--------|----------|
+| Services | 0% |
+| Controllers | 0% |
+| API | 0% |
 
-| 指标 | 数值 |
-|------|------|
-| 测试用例总数 | X |
-| 通过数 | X |
-| 失败数 | X |
-| 阻塞数 | X |
-| 通过率 | X% |
+## Defects Found
 
-## 2. 测试结果
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-001 | High | [Description] | Open |
 
-### 2.1 功能测试
+## Test Environment
 
-| 用例ID | 用例名称 | 优先级 | 状态 |
-|--------|----------|--------|------|
-| TC-001 | 用户注册 | P0 | Pass |
-| TC-002 | 用户登录 | P0 | Pass |
+- **OS**: [Operating System]
+- **Browser**: [Browser Version]
+- **Database**: [Database Version]
+- **Test Date**: [Date]
 
-### 2.2 API 测试
+## Conclusion
 
-| 接口 | 方法 | 状态 | 备注 |
-|------|------|------|------|
-| /api/v1/users | POST | Pass | - |
-
-### 2.3 E2E 测试
-
-| 场景 | 状态 | 备注 |
-|------|------|------|
-| 注册登录流程 | Pass | - |
-
-## 3. 问题清单
-
-### 3.1 严重问题 (P0)
-| 编号 | 描述 | 状态 |
-|------|------|------|
-| - | 无 | - |
-
-### 3.2 一般问题 (P1)
-| 编号 | 描述 | 状态 |
-|------|------|------|
-| BUG-001 | 问题描述 | Open |
-
-### 3.3 建议改进 (P2)
-| 编号 | 描述 | 状态 |
-|------|------|------|
-| - | 无 | - |
-
-## 4. 测试结论
-
-### 4.1 质量评估
-[对系统质量的总体评价]
-
-### 4.2 发布建议
-- [ ] 可以发布
-- [ ] 需要修复 P0 问题后发布
-- [ ] 不建议发布
-
-### 4.3 风险提示
-[潜在的风险和注意事项]
+⬜ Pass - Ready for release
+⬜ Conditional Pass - Minor issues to fix
+⬜ Fail - Critical issues found
 ```
 
 ## Quality Checklist
 
 | Check | Criteria |
 |-------|----------|
-| P0 Coverage | All P0 features have test cases |
-| API Tested | All endpoints tested |
-| E2E Critical | Critical flows have E2E tests |
-| Issues Documented | All bugs documented |
-| Report Complete | TestReport.md follows template |
+| Test Design | Used standard methods (equivalence, boundary, etc.) |
+| Coverage | All P0 features covered |
+| Independence | Each test is independent |
+| Documentation | Clear test cases with expected results |
+| Automation | Repetitive tests automated |
+| E2E Tests | Critical user paths tested |
+| Visual Tests | Playwright screenshots for UI changes |
