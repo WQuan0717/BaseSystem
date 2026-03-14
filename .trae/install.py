@@ -2,13 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 Trae 平台安装脚本
-将 .trae 目录安装到目标项目
+从 GitHub 下载 .trae 目录并安装到目标项目
 """
 
 import os
 import sys
 import shutil
+import tempfile
+import zipfile
 from pathlib import Path
+from urllib.request import urlretrieve, urlopen
 
 
 def check_python_version():
@@ -37,44 +40,77 @@ def find_project_root():
     return current
 
 
-def copy_trae_directory(target_dir: Path):
-    """复制 .trae 目录"""
-    # 获取脚本所在目录
-    script_dir = Path(__file__).parent
+def download_trae_from_github(target_dir: Path):
+    """从 GitHub 下载 .trae 目录"""
+    # GitHub 仓库信息
+    repo_owner = "WQuan0717"
+    repo_name = "BaseSystem"
+    branch = "trae-platform-test"
     
-    # 查找 .trae 目录
-    trae_source = script_dir / ".trae"
+    print(f"🌐 从 GitHub 下载 .trae 目录...")
+    print(f"   仓库：{repo_owner}/{repo_name}")
+    print(f"   分支：{branch}")
     
-    if not trae_source.exists():
-        # 尝试从上级目录查找
-        trae_source = script_dir.parent / ".trae"
+    # 构建下载 URL
+    zip_url = f"https://github.com/{repo_owner}/{repo_name}/archive/refs/heads/{branch}.zip"
     
-    if not trae_source.exists():
-        print("❌ 找不到 .trae 目录")
-        print(f"   已尝试路径:")
-        print(f"   - {trae_source}")
+    try:
+        # 创建临时文件
+        with tempfile.NamedTemporaryFile(suffix='.zip', delete=False) as tmp_file:
+            temp_zip = tmp_file.name
+        
+        # 下载 ZIP 文件
+        print(f"📥 正在下载...")
+        urlretrieve(zip_url, temp_zip)
+        
+        # 解压 ZIP 文件
+        print(f"📦 正在解压...")
+        with zipfile.ZipFile(temp_zip, 'r') as zip_ref:
+            # 获取 .trae 目录在 ZIP 中的路径
+            trae_files = [f for f in zip_ref.namelist() if f.startswith(f'{repo_name}-{branch}/.trae/')]
+            
+            if not trae_files:
+                print("❌ 在仓库中找不到 .trae 目录")
+                sys.exit(1)
+            
+            # 解压 .trae 到临时目录
+            temp_extract_dir = tempfile.mkdtemp()
+            for file in trae_files:
+                zip_ref.extract(file, temp_extract_dir)
+        
+        # 获取解压后的 .trae 路径
+        extracted_trae = Path(temp_extract_dir) / f'{repo_name}-{branch}' / '.trae'
+        
+        # 目标位置
+        trae_target = target_dir / ".trae"
+        
+        # 如果已存在，先备份
+        if trae_target.exists():
+            backup_path = target_dir / ".trae.backup"
+            print(f"⚠️  备份现有的 .trae 到：{backup_path}")
+            if backup_path.exists():
+                shutil.rmtree(backup_path)
+            shutil.move(str(trae_target), str(backup_path))
+        
+        # 复制 .trae 到目标目录
+        print(f"📦 安装 .trae 到：{trae_target}")
+        shutil.copytree(str(extracted_trae), str(trae_target))
+        
+        # 清理临时文件
+        shutil.rmtree(temp_extract_dir)
+        os.unlink(temp_zip)
+        
+        # 统计文件
+        file_count = sum(1 for _ in trae_target.rglob("*") if _.is_file())
+        print(f"✓ 已安装 {file_count} 个文件")
+        
+    except Exception as e:
+        print(f"❌ 下载失败：{e}")
+        print(f"\n💡 建议:")
+        print(f"   1. 检查网络连接")
+        print(f"   2. 手动从 GitHub 下载：{zip_url}")
+        print(f"   3. 使用 git clone 方式获取完整项目")
         sys.exit(1)
-    
-    print(f"✓ 找到 .trae 目录：{trae_source}")
-    
-    # 目标位置
-    trae_target = target_dir / ".trae"
-    
-    # 如果已存在，先备份
-    if trae_target.exists():
-        backup_path = target_dir / ".trae.backup"
-        print(f"⚠️  备份现有的 .trae 到：{backup_path}")
-        if backup_path.exists():
-            shutil.rmtree(backup_path)
-        shutil.move(str(trae_target), str(backup_path))
-    
-    # 复制目录
-    print(f"📦 复制 .trae 到：{trae_target}")
-    shutil.copytree(str(trae_source), str(trae_target))
-    
-    # 统计文件
-    file_count = sum(1 for _ in trae_target.rglob("*") if _.is_file())
-    print(f"✓ 已复制 {file_count} 个文件")
 
 
 def verify_installation(target_dir: Path):
@@ -175,8 +211,8 @@ def main():
     print(f"📁 目标目录：{target_dir}")
     print()
     
-    # 复制 .trae 目录
-    copy_trae_directory(target_dir)
+    # 从 GitHub 下载 .trae 目录
+    download_trae_from_github(target_dir)
     print()
     
     # 验证安装
