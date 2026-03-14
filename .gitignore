@@ -46,6 +46,9 @@ temp/
 # Trae Platform
 .trae/skills/*/scripts/__pycache__/
 .trae/skills/*/scripts/*.pyc
+.trae/install.py
+.trae/INSTALL.md
+.trae/README.md
 
 # Test outputs
 tests/e2e/test-results/
