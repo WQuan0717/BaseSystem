@@ -10,7 +10,7 @@
 
 ```bash
 # 方式 1：使用安装脚本（推荐）
-curl -o trae-install.py https://raw.githubusercontent.com/WQuan0717/BaseSystem/trae-platform-test/.trae/install.py
+curl -o trae-install.py https://raw.githubusercontent.com/WQuan0717/BaseSystem/trae-platform-test/trae-install.py
 python trae-install.py
 
 # 方式 2：手动复制
@@ -50,14 +50,11 @@ invoke se-development
 │   ├── se-testing/           # 测试验证
 │   ├── se-documentation/     # 文档生成
 │   └── ...                   # 其他工具 skills
-├── agents/                   # 子智能体配置（可选）
-│   ├── README.md             # 使用指南
-│   ├── qa-engineer.md        # QA 工程师
-│   ├── technical-writer.md   # 技术作家
-│   └── agentic-optimizer.md  # Agent 优化师
-├── install.py                # 安装脚本
-├── README.md                 # 平台说明
-└── INSTALL.md                # 安装指南
+└── agents/                   # 子智能体配置（可选）
+    ├── README.md             # 使用指南
+    ├── qa-engineer.md        # QA 工程师
+    ├── technical-writer.md   # 技术作家
+    └── agentic-optimizer.md  # Agent 优化师
 ```
 
 ---
@@ -161,7 +158,7 @@ SOLO Coder（开发） ──┬──> QA Engineer（测试）
 ### 方式 1：使用安装脚本（推荐）
 
 ```bash
-curl -o trae-install.py https://raw.githubusercontent.com/WQuan0717/BaseSystem/trae-platform-test/.trae/install.py
+curl -o trae-install.py https://raw.githubusercontent.com/WQuan0717/BaseSystem/trae-platform-test/trae-install.py
 python trae-install.py
 ```
 
@@ -198,13 +195,10 @@ ls .trae/
 # │   ├── se-lifecycle/
 # │   ├── se-context/
 # │   └── ...
-# ├── agents/
-# │   ├── README.md
-# │   ├── qa-engineer.md
-# │   └── ...
-# ├── install.py
-# ├── README.md
-# └── INSTALL.md
+# └── agents/
+#     ├── README.md
+#     ├── qa-engineer.md
+#     └── ...
 ```
 
 ---
