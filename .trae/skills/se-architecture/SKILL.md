@@ -7,6 +7,10 @@ description: Architecture design knowledge for software engineering. Provides me
 
 Professional knowledge for architecture phase. Transform Requirement.md into Design.md with tech stack decisions and architecture patterns.
 
+**Previous Skill**: se-requirements (reads Requirement.md)
+
+**Next Skill**: se-detailed-design (after architecture is complete)
+
 ## Core Principles
 
 ### Principle 1: Don't Reinvent the Wheel

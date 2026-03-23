@@ -82,12 +82,28 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 
 | Current Phase | Subagent Returns | SOLO Coder Action |
 |---------------|------------------|-------------------|
-| Requirements | "Requirements complete: Requirement.md" | Invoke se-architecture |
-| Architecture | "Architecture complete: Design.md" | Invoke se-detailed-design |
-| Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-development |
-| Development | "Development complete: Code + Tests" | Invoke se-testing |
-| Testing | "Testing complete: TestReport.md" | Invoke se-documentation |
-| Documentation | "Documentation complete: All docs" | Report project done |
+| Requirements | "Requirements complete: Requirement.md" | Invoke se-context (update phase) + Invoke se-architecture + Generate skills_rules |
+| Architecture | "Architecture complete: Design.md" | Invoke se-context (update phase) + Invoke se-detailed-design |
+| Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-context (update phase) + Invoke se-development |
+| Development | "Development complete: Code + Tests" | Invoke se-context (update phase) + Invoke se-testing |
+| Testing | "Testing complete: TestReport.md" | Invoke se-context (update phase) + Invoke se-documentation |
+| Documentation | "Documentation complete: All docs" | Invoke se-context (update phase) + Report project done |
+
+### Required Actions After Each Phase
+
+1. **Update project state** - Invoke se-context to update phase status
+2. **Generate skills usage plan** - After requirements complete, check `.trae/skills/` and generate `.trae/rules/skills_rules.md`
+3. **Proceed to next phase** - Invoke next skill per transition protocol
+
+### Diagram Generation
+
+Generate diagrams at appropriate phases:
+
+| Phase | Diagram | Skill |
+|-------|---------|-------|
+| Requirements | Use Case Diagram | Invoke se-diagram |
+| Architecture | Architecture Diagram + ER Diagram | Invoke se-diagram |
+| Detailed Design | Class Diagram + Flowchart | Invoke se-diagram |
 
 ### Subagent Return Format
 

@@ -2,6 +2,10 @@
 
 Professional knowledge for testing phase. Validate code quality through API testing, E2E testing, and generate TestReport.md.
 
+**Previous Skill**: se-development (validates Code + Unit Tests)
+
+**Next Skill**: se-documentation (after testing is complete)
+
 ## Core Principles
 
 ### Principle 1: Test Coverage First

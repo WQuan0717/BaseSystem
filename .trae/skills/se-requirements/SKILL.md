@@ -1,11 +1,15 @@
 ---
 name: se-requirements
-description: Requirements analysis knowledge for software engineering. Provides methods for requirement elicitation, MoSCoW prioritization, questioning techniques, and Requirement.md generation.
+description: Requirements analysis knowledge for software engineering. Provides methods for requirement elicitation, 5W1H analysis, MoSCoW prioritization, and Requirement.md generation.
 ---
 
 # Requirements Analysis
 
 Professional knowledge for requirements phase. Transform vague user ideas into structured Requirement.md.
+
+**Previous Skill**: None (this is the first phase)
+
+**Next Skill**: se-architecture (after requirements are complete)
 
 ## Core Principles
 

@@ -7,6 +7,10 @@ description: Development knowledge for software engineering. Provides methods fo
 
 Professional knowledge for development phase. Transform DetailedDesign.md into working code with unit tests using vertical slice development.
 
+**Previous Skill**: se-detailed-design (reads DetailedDesign.md)
+
+**Next Skill**: se-testing (after development is complete)
+
 ## Core Principles
 
 ### Principle 1: Vertical Slice Development

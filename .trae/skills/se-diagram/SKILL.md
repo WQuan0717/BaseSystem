@@ -7,6 +7,10 @@ description: Generate Mermaid diagrams for software engineering. Creates usecase
 
 Generate Mermaid diagrams from text descriptions and design documents.
 
+**Previous Skill**: Invoked by other phase skills (se-requirements, se-architecture, se-detailed-design)
+
+**Next Skill**: Returns to calling skill
+
 ## Core Principles
 
 ### 1. Text to Diagram

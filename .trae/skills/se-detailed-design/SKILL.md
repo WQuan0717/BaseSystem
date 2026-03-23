@@ -7,6 +7,10 @@ description: Detailed design knowledge for software engineering. Provides method
 
 Professional knowledge for detailed design phase. Transform Design.md into DetailedDesign.md with executable specifications.
 
+**Previous Skill**: se-architecture (reads Design.md)
+
+**Next Skill**: se-development (after detailed design is complete)
+
 ## Core Principles
 
 ### Principle 1: Executable Specifications

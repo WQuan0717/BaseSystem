@@ -7,6 +7,10 @@ description: Manage project context and state across phases. Provides persistent
 
 Manage project context using file system for persistence across phases and sessions.
 
+**Previous Skill**: Invoked by se-lifecycle after each phase completion
+
+**Next Skill**: Returns to se-lifecycle for next phase transition
+
 ## Core Principles
 
 ### 1. Persistence
@@ -457,21 +461,6 @@ def update_phase(phase: str, status: str = "completed") -> dict:
     save_state(state)
     return state
 ```
-
-### Generate Skills Usage Plan
-
-After requirements analysis is complete, generate project-specific skills usage plan:
-
-1. Read requirement analysis results
-2. Check available skills: `ls .trae/skills/`
-3. Select applicable skills based on project needs
-4. Create `.trae/rules/skills_rules.md` with selected skills
-
-The model should dynamically determine which optional skills to include based on:
-- Project type (web_app, ai_system, api_service, etc.)
-- Required features from requirements
-- Technical complexity
-- Integration needs (external APIs, databases, etc.)
 
 ### Add Decision
 

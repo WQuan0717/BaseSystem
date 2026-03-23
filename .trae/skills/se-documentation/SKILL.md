@@ -7,6 +7,10 @@ description: Documentation generation knowledge for software engineering. Provid
 
 Professional knowledge for documentation phase. Generate comprehensive project documentation after development completion.
 
+**Previous Skill**: se-testing (reads TestReport.md and Code)
+
+**Next Skill**: None (this is the final phase)
+
 ## Core Principles
 
 ### Principle 1: User-Centric
