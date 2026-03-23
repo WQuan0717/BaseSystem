@@ -29,54 +29,54 @@ SOLO Coder 在需求分析阶段完成后，必须：
 | 💻 开发 | `se-development` | 代码实现 |
 | 🧪 测试 | `se-testing` | 测试验证 |
 | 📖 文档 | `se-documentation` | 文档生成 |
+| 📊 画图 | `se-diagram` | 图表生成（各阶段需要时） |
 | 💾 状态 | `se-context` | 状态管理（每个阶段后） |
-
-**注意**：`se-diagram` 虽然重要，但属于按需调用（见下文）。
 
 ---
 
 ## 🔧 可选 Skills（根据需求选用）
 
-### 数据与 AI 相关
+### 文档生成相关
 
 | Skill | 适用场景 | 调用时机 |
 |-------|----------|----------|
-| `se-database` | 需要复杂数据库设计、迁移、优化 | 详细设计阶段或开发阶段 |
-| `se-ai-integration` | 需要集成 AI/ML 模型、RAG 系统 | 架构设计或开发阶段 |
-| `se-data-pipeline` | 需要构建数据管道、ETL 流程 | 架构设计阶段 |
-| `se-performance` | 需要性能优化、调优 | 开发或测试阶段 |
+| `docx` | 需要生成 Word 文档 | 文档阶段 |
+| `pdf` | 需要生成 PDF 或处理 PDF 表单 | 文档阶段 |
+| `pptx` | 需要生成 PowerPoint | 文档阶段 |
+| `xlsx` | 需要生成 Excel 电子表格 | 文档阶段 |
 
 ### 前端相关
 
 | Skill | 适用场景 | 调用时机 |
 |-------|----------|----------|
-| `se-frontend` | 需要专业前端开发指导 | 开发阶段 |
-| `se-ui-design` | 需要 UI/UX 设计 | 详细设计或开发阶段 |
-| `se-mobile` | 需要移动端开发 | 开发阶段 |
+| `frontend-design` | 需要专业前端界面设计指导 | 开发阶段 |
+| `ui-ux-pro-max` | 需要 UI/UX 设计参考 | 开发阶段 |
 
-### 后端相关
-
-| Skill | 适用场景 | 调用时机 |
-|-------|----------|----------|
-| `se-backend` | 需要专业后端架构指导 | 架构或开发阶段 |
-| `se-api-design` | 需要 API 设计规范 | 详细设计阶段 |
-| `se-security` | 需要安全审计、加固 | 架构或测试阶段 |
-
-### 运维相关
+### 开发工具相关
 
 | Skill | 适用场景 | 调用时机 |
 |-------|----------|----------|
-| `se-deployment` | 需要部署配置、CI/CD | 测试完成后 |
-| `se-monitoring` | 需要监控、日志系统 | 开发或部署阶段 |
-| `se-devops` | 需要 DevOps 实践 | 开发或部署阶段 |
+| `mcp-builder` | 需要构建 MCP Server 集成外部 API | 开发阶段 |
+| `webapp-testing` | 需要 Web 应用自动化测试 | 测试阶段 |
+| `web-artifacts-builder` | 需要构建复杂 Web UI 组件 | 开发阶段 |
 
-### 质量相关
+### 创建与设计相关
 
 | Skill | 适用场景 | 调用时机 |
 |-------|----------|----------|
-| `se-code-review` | 需要代码审查 | 开发阶段 |
-| `se-refactoring` | 需要代码重构 | 开发阶段 |
-| `se-testing-advanced` | 需要高级测试策略 | 测试阶段 |
+| `skill-creator` | 需要创建新的 Skill | 开发阶段 |
+| `subagent-creator` | 需要创建新的子智能体 | 开发阶段 |
+| `theme-factory` | 需要设计主题或样式 | 开发阶段 |
+| `brand-guidelines` | 需要品牌设计指导 | 开发阶段 |
+| `canvas-design` | 需要视觉设计 | 开发阶段 |
+| `algorithmic-art` | 需要算法生成艺术 | 开发阶段 |
+
+### 协作与沟通
+
+| Skill | 适用场景 | 调用时机 |
+|-------|----------|----------|
+| `doc-coauthoring` | 需要协作写作 | 文档阶段 |
+| `internal-comms` | 需要内部沟通文档 | 文档阶段 |
 
 ---
 
@@ -97,7 +97,7 @@ SOLO Coder 在需求分析阶段完成后，必须：
 ```
 分析需求文档
     ↓
-识别技术领域（AI、移动端、数据库等）
+识别技术领域（前端、文档、测试等）
     ↓
 选择对应领域的可选 Skills
     ↓
@@ -122,17 +122,17 @@ SOLO Coder 在需求分析阶段完成后，必须：
 
 ### 何时调用可选 Skills？
 
+- **需要生成特定格式文档** → 调用对应文档类 Skill
+  - 例如：需要生成 Word 报告 → `docx`
+  - 例如：需要生成 Excel 数据表 → `xlsx`
+
 - **技术栈涉及特定领域** → 调用对应领域 Skill
-  - 例如：需要 PostgreSQL 高级特性 → `se-database`
-  - 例如：需要集成 OpenAI API → `se-ai-integration`
+  - 例如：需要 Web 界面 → `frontend-design`
+  - 例如：需要外部 API 集成 → `mcp-builder`
 
 - **遇到特定问题** → 调用问题解决类 Skill
-  - 例如：性能瓶颈 → `se-performance`
-  - 例如：安全漏洞 → `se-security`
-
-- **需要专业指导** → 调用专业领域 Skill
-  - 例如：UI 设计不明确 → `se-ui-design`
-  - 例如：API 设计混乱 → `se-api-design`
+  - 例如：Web 应用测试 → `webapp-testing`
+  - 例如：需要创建新 Skill → `skill-creator`
 
 ### 何时不调用？
 
