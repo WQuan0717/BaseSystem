@@ -417,42 +417,61 @@ Update project phase and progress.
 def update_phase(phase: str, status: str = "completed") -> dict:
     """
     Update project phase.
-    
+
     Args:
         phase: Phase name (requirements, architecture, etc.)
         status: completed, in_progress, pending
-        
+
     Returns:
         Updated project state
     """
     state = load_state()
-    
+
     if status == "completed":
         if phase not in state["completed_phases"]:
             state["completed_phases"].append(phase)
         if phase in state["pending_phases"]:
             state["pending_phases"].remove(phase)
-            
+
         # Auto-set next phase
         if state["pending_phases"]:
             state["current_phase"] = state["pending_phases"][0]
         else:
             state["current_phase"] = "completed"
-            
+
+        # After requirements completed, auto-generate skills usage plan
+        if phase == "requirements":
+            generate_skills_usage_plan()
+
     elif status == "in_progress":
         state["current_phase"] = phase
-        
+
     # Calculate completion percentage
     total_phases = len(state["completed_phases"]) + len(state["pending_phases"])
     if total_phases > 0:
         state["completion_percentage"] = int(
             len(state["completed_phases"]) / total_phases * 100
         )
-    
+
     state["last_updated"] = datetime.now().isoformat()
     save_state(state)
     return state
 ```
+
+### Generate Skills Usage Plan
+
+After requirements analysis is complete, generate project-specific skills usage plan:
+
+1. Read requirement analysis results
+2. Check available skills: `ls .trae/skills/`
+3. Select applicable skills based on project needs
+4. Create `.trae/rules/skills_rules.md` with selected skills
+
+The model should dynamically determine which optional skills to include based on:
+- Project type (web_app, ai_system, api_service, etc.)
+- Required features from requirements
+- Technical complexity
+- Integration needs (external APIs, databases, etc.)
 
 ### Add Decision
 

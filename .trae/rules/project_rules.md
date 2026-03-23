@@ -25,8 +25,8 @@
 
 4. **初始化项目上下文**
    - 运行初始化命令：`python .trae/skills/se-context/scripts/init_context.py "项目名称"`
-   - 自动生成 `.trae/rules/skills_rules.md` - 项目专用的 Skills 使用规则
    - 自动创建 `docs/context/project_state.json` - 项目状态文件
+   - 模型将在需求分析后自动生成 `.trae/rules/skills_rules.md` - 项目专用的 Skills 使用规则
 
 **重要**：每个阶段完成后，必须调用 `se-context` 更新项目状态！
 
