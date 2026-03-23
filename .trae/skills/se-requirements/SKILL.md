@@ -71,8 +71,8 @@ Professional knowledge for requirements phase. Transform vague user ideas into s
 - Existing systems (analysis of current workflow)
 
 ### Analysis Steps
-1. **Ask for Project Name** - This is the first question, used to initialize project context
-2. **Auto-initialize** - After getting project name, run `python .trae/skills/se-context/scripts/init_context.py "project_name"`
+1. Ask for project name first
+2. Auto-initialize project context after getting project name
 3. Read all input sources
 4. Extract functional requirements
 5. Extract non-functional requirements
