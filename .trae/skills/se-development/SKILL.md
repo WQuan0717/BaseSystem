@@ -55,6 +55,21 @@ taskkill /F /PID <process_id>
 - Each commit should be a working state
 - Use feature branches for isolation
 
+### Principle 7: Environment-Aware Configuration
+- Use environment variables for all API/interface URLs
+- Support multiple environments: local, Docker, production
+- Never hardcode interface URLs
+
+### Principle 8: WSL2 Compatibility
+- Current environment: WSL2 (Ubuntu 24.04)
+- Use `ls -la` instead of `ls` to check files
+- Some tools may not work in WSL, use appropriate commands
+
+### Principle 9: Test File Management
+- Test files are never deleted after use
+- Create new test files in `test_to_be_deleted/` directory
+- This allows later review and reuse
+
 ## Vertical Slice Workflow
 
 ### Slice Definition
@@ -366,3 +381,62 @@ npm run dev
 | **Database connection** | Check application logs | No database connection errors |
 | Commits clear | `git log` | Each commit is a working state |
 | Summary updated | Review Implementation_Summary.md | Document reflects actual implementation |
+
+## Environment-Aware API Configuration
+
+### Configuration Template
+
+For frontend applications, use environment variables with fallback logic:
+
+```typescript
+// src/config/api.ts
+const isDocker = import.meta.env.VITE_DOCKER_ENV === 'true';
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL    // 1. Manual override first
+  || (isDocker ? '' : 'http://localhost:8000');                  // 2. Otherwise, auto-detect by environment
+```
+
+### Environment Variable Convention
+
+| Variable | Purpose | Example |
+|---------|---------|---------|
+| `VITE_API_BASE_URL` | Manual API base URL override | `https://api.example.com` |
+| `VITE_DOCKER_ENV` | Docker environment flag | `true` or `false` |
+
+### Backend Configuration (Python/FastAPI)
+
+```python
+# backend/config.py
+import os
+
+class Config:
+    # Docker environment
+    DOCKER_ENV = os.getenv("DOCKER_ENV", "false") == "true"
+
+    # API URL based on environment
+    API_BASE_URL = os.getenv("VITE_API_BASE_URL") or \
+                   ("http://nginx:80" if DOCKER_ENV else "http://localhost:8000")
+```
+
+### Usage Rules
+
+1. **Never hardcode URLs**: Always use environment variables
+2. **Support local dev**: `localhost:8000` for backend
+3. **Support Docker**: Use container service names (e.g., `nginx`)
+4. **Support production**: Use configured production URLs
+
+### Example .env File
+
+```bash
+# .env.development
+VITE_DOCKER_ENV=false
+VITE_API_BASE_URL=
+
+# .env.production
+VITE_DOCKER_ENV=false
+VITE_API_BASE_URL=https://api.production.com
+
+# .env.docker
+VITE_DOCKER_ENV=true
+VITE_API_BASE_URL=
+```
