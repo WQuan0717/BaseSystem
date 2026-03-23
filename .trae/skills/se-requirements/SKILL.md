@@ -45,11 +45,11 @@ Professional knowledge for requirements phase. Transform vague user ideas into s
 ### High-Value Questions
 
 **For vague ideas:**
-1. **项目名称**：这个项目叫什么名字？（用于初始化项目上下文）
-2. 这个系统的主要使用者是谁？他们需要解决什么核心问题？
-3. 请描述一下最核心的 1-2 个业务流程是怎样的？
-4. 有没有哪些功能是必须在第一版就实现的？
-5. 预期的用户规模和数据量大概是多少？
+1. **Project Name**: What is the name of this project? (for initializing project context)
+2. Who are the main users? What core problem do they need to solve?
+3. Please describe the most core 1-2 business flows
+4. What features must be implemented in the first version?
+5. What is the expected user scale and data volume?
 
 **For Excel workflows:**
 1. 你们目前的 Excel 流程主要是做什么的？
@@ -71,8 +71,8 @@ Professional knowledge for requirements phase. Transform vague user ideas into s
 - Existing systems (analysis of current workflow)
 
 ### Analysis Steps
-1. **询问项目名称** - 这是第一个问题，用于初始化项目上下文
-2. **自动初始化** - 获得项目名称后，运行 `python .trae/skills/se-context/scripts/init_context.py "项目名称"`
+1. **Ask for Project Name** - This is the first question, used to initialize project context
+2. **Auto-initialize** - After getting project name, run `python .trae/skills/se-context/scripts/init_context.py "project_name"`
 3. Read all input sources
 4. Extract functional requirements
 5. Extract non-functional requirements
