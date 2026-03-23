@@ -32,10 +32,10 @@ Manage project context using file system for persistence across phases and sessi
 
 ```
 docs/context/
-├── project_state.json      # 项目状态（机器可读）
-├── decisions.md            # 决策记录（人工可读）
-├── progress.md             # 进度跟踪（人工可读）
-└── history/                # 历史记录
+├── project_state.json      # Project state (machine-readable)
+├── decisions.md            # Decision log (human-readable)
+├── progress.md             # Progress tracking (human-readable)
+└── history/                # Historical records
     ├── state_2025-01-01.json
     ├── state_2025-01-02.json
     └── ...
@@ -53,21 +53,21 @@ docs/context/
   "properties": {
     "project_name": {
       "type": "string",
-      "description": "项目名称"
+      "description": "Project name"
     },
     "project_type": {
       "type": "string",
       "enum": ["web_app", "mobile_app", "desktop_app", "ai_system", "api_service", "other"],
-      "description": "项目类型"
+      "description": "Project type"
     },
     "project_description": {
       "type": "string",
-      "description": "项目简短描述"
+      "description": "Brief project description"
     },
     "current_phase": {
       "type": "string",
       "enum": ["init", "requirements", "architecture", "design", "development", "testing", "deployment", "completed"],
-      "description": "当前阶段"
+      "description": "Current phase"
     },
     "completed_phases": {
       "type": "array",
@@ -75,7 +75,7 @@ docs/context/
         "type": "string",
         "enum": ["init", "requirements", "architecture", "design", "development", "testing", "deployment"]
       },
-      "description": "已完成阶段"
+      "description": "Completed phases"
     },
     "pending_phases": {
       "type": "array",
@@ -83,23 +83,23 @@ docs/context/
         "type": "string",
         "enum": ["requirements", "architecture", "design", "development", "testing", "deployment", "completed"]
       },
-      "description": "待完成阶段"
+      "description": "Pending phases"
     },
     "completion_percentage": {
       "type": "integer",
       "minimum": 0,
       "maximum": 100,
-      "description": "完成百分比"
+      "description": "Completion percentage"
     },
     "complexity": {
       "type": "string",
       "enum": ["simple", "standard", "complex"],
-      "description": "项目复杂度"
+      "description": "Project complexity"
     },
     "mode": {
       "type": "string",
       "enum": ["fast", "standard", "full"],
-      "description": "工作模式"
+      "description": "Working mode"
     },
     "tech_stack": {
       "type": "object",
@@ -112,22 +112,22 @@ docs/context/
     },
     "team_size": {
       "type": "integer",
-      "description": "团队规模"
+      "description": "Team size"
     },
     "start_date": {
       "type": "string",
       "format": "date",
-      "description": "开始日期"
+      "description": "Start date"
     },
     "target_date": {
       "type": "string",
       "format": "date",
-      "description": "目标完成日期"
+      "description": "Target completion date"
     },
     "last_updated": {
       "type": "string",
       "format": "date-time",
-      "description": "最后更新时间"
+      "description": "Last updated timestamp"
     },
     "blocking_issues": {
       "type": "array",
@@ -144,11 +144,11 @@ docs/context/
     },
     "next_action": {
       "type": "string",
-      "description": "下一步行动"
+      "description": "Next action to take"
     },
     "metadata": {
       "type": "object",
-      "description": "额外元数据"
+      "description": "Additional metadata"
     }
   }
 }
@@ -158,9 +158,9 @@ docs/context/
 
 ```json
 {
-  "project_name": "校园学习平台",
+  "project_name": "Campus Learning Platform",
   "project_type": "web_app",
-  "project_description": "基于Spring Boot的校园学习平台，支持博客和在线答题",
+  "project_description": "A campus learning platform with blog and quiz features",
   "current_phase": "architecture",
   "completed_phases": ["init", "requirements"],
   "pending_phases": ["design", "development", "testing", "deployment"],
@@ -178,7 +178,7 @@ docs/context/
   "target_date": "2025-02-01",
   "last_updated": "2025-01-03T10:30:00Z",
   "blocking_issues": [],
-  "next_action": "等待用户确认架构图",
+  "next_action": "Waiting for user to confirm architecture diagram",
   "metadata": {
     "created_by": "requirements-analyst",
     "last_phase_completed": "requirements"
@@ -191,68 +191,68 @@ docs/context/
 ### Format
 
 ```markdown
-# 决策记录
+# Decision Log
 
-## 决策模板
+## Decision Template
 
-### YYYY-MM-DD 决策标题
-- **决策ID**: DEC-XXX
-- **决策**: [具体决策内容]
-- **原因**: [为什么做这个决策]
-- **备选方案**: [考虑过但未选择的方案]
-- **影响范围**: [影响哪些模块/功能]
-- **决策人**: [谁做的决策]
-- **状态**: [已确认/待确认/已变更]
-- **相关文档**: [链接到相关文档]
+### YYYY-MM-DD Decision Title
+- **Decision ID**: DEC-XXX
+- **Decision**: [Specific decision made]
+- **Reason**: [Why this decision was made]
+- **Alternatives**: [Options considered but not chosen]
+- **Impact**: [Which modules/features are affected]
+- **Decision Maker**: [Who made the decision]
+- **Status**: [Confirmed/Pending/Changed]
+- **Related Docs**: [Links to related documentation]
 
 ---
 
-## 实际决策记录
+## Actual Decision Records
 
-### 2025-01-01 技术栈选择
-- **决策ID**: DEC-001
-- **决策**: 使用 Vue 3 + Spring Boot 技术栈
-- **原因**: 
-  - 团队熟悉这两个框架
-  - 生态丰富，文档完善
-  - 适合快速开发
-- **备选方案**: 
-  - React + Node.js（学习成本高）
-  - Angular + Java EE（过于重量级）
-- **影响范围**: 整个项目架构
-- **决策人**: system-architect
-- **状态**: 已确认
-- **相关文档**: Design.md
+### 2025-01-01 Tech Stack Selection
+- **Decision ID**: DEC-001
+- **Decision**: Use Vue 3 + Spring Boot
+- **Reason**:
+  - Team is familiar with both frameworks
+  - Rich ecosystem and complete documentation
+  - Suitable for rapid development
+- **Alternatives**:
+  - React + Node.js (high learning curve)
+  - Angular + Java EE (too heavyweight)
+- **Impact**: Entire project architecture
+- **Decision Maker**: system-architect
+- **Status**: Confirmed
+- **Related Docs**: Design.md
 
-### 2025-01-02 数据库选择
-- **决策ID**: DEC-002
-- **决策**: 使用 MySQL + Redis
-- **原因**:
-  - MySQL 支持事务和复杂查询
-  - Redis 提供缓存支持
-  - 两者都是成熟稳定的技术
-- **备选方案**:
-  - MongoDB（不适合复杂关系查询）
-  - PostgreSQL（团队不熟悉）
-- **影响范围**: 数据存储层
-- **决策人**: detailed-designer
-- **状态**: 已确认
-- **相关文档**: DetailedDesign.md
+### 2025-01-02 Database Selection
+- **Decision ID**: DEC-002
+- **Decision**: Use MySQL + Redis
+- **Reason**:
+  - MySQL supports transactions and complex queries
+  - Redis provides caching
+  - Both are mature and stable technologies
+- **Alternatives**:
+  - MongoDB (not suitable for complex relational queries)
+  - PostgreSQL (team is not familiar)
+- **Impact**: Data storage layer
+- **Decision Maker**: detailed-designer
+- **Status**: Confirmed
+- **Related Docs**: DetailedDesign.md
 
-### 2025-01-03 认证方案
-- **决策ID**: DEC-003
-- **决策**: 使用 JWT + Redis Session 混合方案
-- **原因**:
-  - JWT 支持无状态认证
-  - Redis 支持会话管理和登出
-  - 兼顾性能和安全性
-- **备选方案**:
-  - 纯 JWT（无法主动失效）
-  - 纯 Session（有状态，扩展性差）
-- **影响范围**: 用户认证模块
-- **决策人**: detailed-designer
-- **状态**: 已确认
-- **相关文档**: DetailedDesign.md
+### 2025-01-03 Authentication Strategy
+- **Decision ID**: DEC-003
+- **Decision**: Use JWT + Redis Session hybrid
+- **Reason**:
+  - JWT supports stateless authentication
+  - Redis supports session management and logout
+  - Balances performance and security
+- **Alternatives**:
+  - Pure JWT (cannot invalidate actively)
+  - Pure Session (stateful, poor scalability)
+- **Impact**: User authentication module
+- **Decision Maker**: detailed-designer
+- **Status**: Confirmed
+- **Related Docs**: DetailedDesign.md
 ```
 
 ## Progress Tracking (progress.md)
@@ -260,122 +260,122 @@ docs/context/
 ### Format
 
 ```markdown
-# 项目进度跟踪
+# Project Progress Tracking
 
-## 项目概览
-- **项目名称**: 校园学习平台
-- **当前阶段**: 架构设计
-- **总体进度**: 30%
-- **开始日期**: 2025-01-01
-- **目标日期**: 2025-02-01
-- **剩余时间**: 29天
+## Project Overview
+- **Project Name**: Campus Learning Platform
+- **Current Phase**: Architecture Design
+- **Overall Progress**: 30%
+- **Start Date**: 2025-01-01
+- **Target Date**: 2025-02-01
+- **Remaining Time**: 29 days
 
 ---
 
-## 阶段详情
+## Phase Details
 
-### ✅ 已完成
+### ✅ Completed
 
-#### 阶段1: 项目启动 (2025-01-01)
-- [x] 项目初始化
-- [x] 需求初步沟通
-- [x] 确定项目范围
-- **耗时**: 1天
-- **状态**: 按时完成
+#### Phase 1: Project Init (2025-01-01)
+- [x] Project initialization
+- [x] Initial requirement discussion
+- [x] Define project scope
+- **Duration**: 1 day
+- **Status**: Completed on time
 
-#### 阶段2: 需求分析 (2025-01-01 ~ 2025-01-02)
-- [x] 需求收集与整理
-- [x] 用户角色识别
-- [x] 功能列表梳理
-- [x] 用例图生成
-- [x] 用户确认需求
-- **耗时**: 2天
-- **状态**: 按时完成
-- **交付物**:
+#### Phase 2: Requirements Analysis (2025-01-01 ~ 2025-01-02)
+- [x] Requirements collection
+- [x] User role identification
+- [x] Feature list organization
+- [x] Use case diagram generation
+- [x] User confirmed requirements
+- **Duration**: 2 days
+- **Status**: Completed on time
+- **Deliverables**:
   - Requirement.md
   - docs/diagrams/usecase.mmd
 
 ---
 
-### 🔄 进行中
+### 🔄 In Progress
 
-#### 阶段3: 架构设计 (2025-01-03 ~ 进行中)
-- [x] 技术选型
-- [x] 架构图生成
-- [ ] 等待用户确认
-- [ ] ER图设计
-- [ ] API设计
-- **预计完成**: 2025-01-05
-- **状态**: 等待确认
-- **阻塞项**: 等待用户确认架构图
-
----
-
-### ⏳ 待开始
-
-#### 阶段4: 详细设计
-- [ ] 数据库详细设计
-- [ ] 类图设计
-- [ ] 接口详细设计
-- [ ] 流程图设计
-- **预计开始**: 2025-01-06
-- **预计完成**: 2025-01-08
-
-#### 阶段5: 开发实现
-- [ ] 环境搭建
-- [ ] 垂直切片1: 用户认证
-- [ ] 垂直切片2: 博客功能
-- [ ] 垂直切片3: 答题功能
-- **预计开始**: 2025-01-09
-- **预计完成**: 2025-01-20
-
-#### 阶段6: 测试验证
-- [ ] 单元测试
-- [ ] 集成测试
-- [ ] 性能测试
-- **预计开始**: 2025-01-21
-- **预计完成**: 2025-01-25
-
-#### 阶段7: 部署交付
-- [ ] 部署文档编写
-- [ ] 生产环境部署
-- [ ] 用户培训
-- **预计开始**: 2025-01-26
-- **预计完成**: 2025-02-01
+#### Phase 3: Architecture Design (2025-01-03 ~ in progress)
+- [x] Tech stack selection
+- [x] Architecture diagram generation
+- [ ] Waiting for user confirmation
+- [ ] ER diagram design
+- [ ] API design
+- **Expected Completion**: 2025-01-05
+- **Status**: Waiting for confirmation
+- **Blocking Items**: Waiting for user to confirm architecture diagram
 
 ---
 
-## 里程碑
+### ⏳ Pending
 
-| 里程碑 | 计划日期 | 实际日期 | 状态 |
-|--------|---------|---------|------|
-| 需求确认 | 2025-01-02 | 2025-01-02 | ✅ 完成 |
-| 架构确认 | 2025-01-05 | - | 🔄 进行中 |
-| 设计完成 | 2025-01-08 | - | ⏳ 待开始 |
-| 开发完成 | 2025-01-20 | - | ⏳ 待开始 |
-| 测试通过 | 2025-01-25 | - | ⏳ 待开始 |
-| 正式上线 | 2025-02-01 | - | ⏳ 待开始 |
+#### Phase 4: Detailed Design
+- [ ] Database detailed design
+- [ ] Class diagram design
+- [ ] Interface detailed design
+- [ ] Flowchart design
+- **Expected Start**: 2025-01-06
+- **Expected Completion**: 2025-01-08
+
+#### Phase 5: Development
+- [ ] Environment setup
+- [ ] Vertical Slice 1: User Authentication
+- [ ] Vertical Slice 2: Blog Feature
+- [ ] Vertical Slice 3: Quiz Feature
+- **Expected Start**: 2025-01-09
+- **Expected Completion**: 2025-01-20
+
+#### Phase 6: Testing
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] Performance tests
+- **Expected Start**: 2025-01-21
+- **Expected Completion**: 2025-01-25
+
+#### Phase 7: Deployment
+- [ ] Deployment documentation
+- [ ] Production deployment
+- [ ] User training
+- **Expected Start**: 2025-01-26
+- **Expected Completion**: 2025-02-01
 
 ---
 
-## 风险与问题
+## Milestones
 
-### 当前风险
-| 风险 | 可能性 | 影响 | 应对措施 | 负责人 |
-|------|--------|------|---------|--------|
-| 需求变更 | 中 | 高 | 建立变更控制流程 | 项目经理 |
-| 技术难点 | 低 | 中 | 提前进行技术预研 | 架构师 |
-
-### 当前问题
-- 无
+| Milestone | Planned Date | Actual Date | Status |
+|-----------|--------------|-------------|---------|
+| Requirements Confirmed | 2025-01-02 | 2025-01-02 | ✅ Completed |
+| Architecture Confirmed | 2025-01-05 | - | 🔄 In Progress |
+| Design Completed | 2025-01-08 | - | ⏳ Pending |
+| Development Completed | 2025-01-20 | - | ⏳ Pending |
+| Testing Passed | 2025-01-25 | - | ⏳ Pending |
+| Production Launch | 2025-02-01 | - | ⏳ Pending |
 
 ---
 
-## 最近更新
+## Risks and Issues
 
-- 2025-01-03: 完成架构设计，等待用户确认
-- 2025-01-02: 完成需求分析，用户已确认
-- 2025-01-01: 项目启动
+### Current Risks
+| Risk | Likelihood | Impact | Mitigation | Owner |
+|------|------------|--------|------------|-------|
+| Requirement Changes | Medium | High | Establish change control process | Project Manager |
+| Technical Difficulty | Low | Medium | Conduct technical research early | Architect |
+
+### Current Issues
+- None
+
+---
+
+## Recent Updates
+
+- 2025-01-03: Architecture design completed, waiting for user confirmation
+- 2025-01-02: Requirements analysis completed, user confirmed
+- 2025-01-01: Project initiated
 ```
 
 ## API Reference
@@ -578,27 +578,27 @@ def get_context() -> dict:
 
 ```python
 # 1. Initialize project
-init_project("校园学习平台", "学习博客和答题系统", "web_app")
+init_project("Campus Learning Platform", "Blog and quiz system", "web_app")
 
 # 2. After requirements phase
 update_phase("requirements", "completed")
 add_decision(
     "DEC-001",
-    "技术栈选择",
-    "使用 Vue 3 + Spring Boot",
-    "团队熟悉，生态丰富",
+    "Tech Stack Selection",
+    "Use Vue 3 + Spring Boot",
+    "Team is familiar, rich ecosystem",
     ["React + Node.js"],
-    "整个项目架构",
+    "Entire project architecture",
     "system-architect"
 )
 
 # 3. During architecture phase
 update_phase("architecture", "in_progress")
-update_progress("architecture", "技术选型", "completed")
-update_progress("architecture", "架构图设计", "in_progress")
+update_progress("architecture", "Tech stack selection", "completed")
+update_progress("architecture", "Architecture diagram design", "in_progress")
 
 # 4. Get full context
 context = get_context()
-print(f"当前阶段: {context['state']['current_phase']}")
-print(f"完成度: {context['state']['completion_percentage']}%")
+print(f"Current phase: {context['state']['current_phase']}")
+print(f"Completion: {context['state']['completion_percentage']}%")
 ```

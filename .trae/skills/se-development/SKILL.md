@@ -236,6 +236,26 @@ describe('UserService', () => {
 
 ## Commit Messages
 
+### Commit Granularity
+
+**When to commit:**
+- After completing each vertical slice (user story)
+- After fixing a bug
+- After updating documentation
+- Before switching to another task
+
+**What each commit should contain:**
+- One complete feature or fix
+- Working state (all tests pass)
+- Clear, descriptive message
+
+**Commit size guidelines:**
+| Slice Size | Files | Lines | When to Commit |
+|------------|-------|-------|----------------|
+| Small | 1-5 | < 100 | Daily |
+| Medium | 5-15 | 100-500 | After completion |
+| Large | 15+ | 500+ | Split into smaller slices |
+
 ### Format
 
 ```
