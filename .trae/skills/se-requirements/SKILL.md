@@ -45,10 +45,11 @@ Professional knowledge for requirements phase. Transform vague user ideas into s
 ### High-Value Questions
 
 **For vague ideas:**
-1. 这个系统的主要使用者是谁？他们需要解决什么核心问题？
-2. 请描述一下最核心的 1-2 个业务流程是怎样的？
-3. 有没有哪些功能是必须在第一版就实现的？
-4. 预期的用户规模和数据量大概是多少？
+1. **项目名称**：这个项目叫什么名字？（用于初始化项目上下文）
+2. 这个系统的主要使用者是谁？他们需要解决什么核心问题？
+3. 请描述一下最核心的 1-2 个业务流程是怎样的？
+4. 有没有哪些功能是必须在第一版就实现的？
+5. 预期的用户规模和数据量大概是多少？
 
 **For Excel workflows:**
 1. 你们目前的 Excel 流程主要是做什么的？
@@ -70,13 +71,15 @@ Professional knowledge for requirements phase. Transform vague user ideas into s
 - Existing systems (analysis of current workflow)
 
 ### Analysis Steps
-1. Read all input sources
-2. Extract functional requirements
-3. Extract non-functional requirements
-4. Identify user roles and permissions
-5. Identify data entities
-6. Identify business rules
-7. Prioritize with MoSCoW
+1. **询问项目名称** - 这是第一个问题，用于初始化项目上下文
+2. **自动初始化** - 获得项目名称后，运行 `python .trae/skills/se-context/scripts/init_context.py "项目名称"`
+3. Read all input sources
+4. Extract functional requirements
+5. Extract non-functional requirements
+6. Identify user roles and permissions
+7. Identify data entities
+8. Identify business rules
+9. Prioritize with MoSCoW
 
 ## Requirement.md Template
 
