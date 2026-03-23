@@ -336,11 +336,33 @@ npm run dev
 
 ## Quality Checklist
 
-| Check | Criteria |
-|-------|----------|
-| Tests Pass | All unit tests pass |
-| Coverage Met | Coverage ≥ 80% |
-| Code Compiles | No TypeScript errors |
-| Lint Clean | No ESLint errors |
-| Commits Clear | Each commit is a working state |
-| Summary Updated | Implementation_Summary.md reflects reality |
+**IMPORTANT: All checks must be ACTUALLY EXECUTED, not just declared. You must run the commands and verify the results.**
+
+### Pre-Development Verification
+
+| Check | Command to Run | Expected Result |
+|-------|----------------|-----------------|
+| Node.js available | `node --version` | Version displayed |
+| Package manager available | `npm --version` or `pnpm --version` | Version displayed |
+
+### Post-Implementation Verification
+
+| Check | Command to Run | Expected Result |
+|-------|----------------|-----------------|
+| Dependencies installed | `npm install` or `pnpm install` | No errors, node_modules created |
+| Entry point exists | Check `src/index.tsx` or `src/main.tsx` or `index.html` | File exists and is not empty |
+| Code compiles | `npm run build` or `npm run type-check` | Build successful, no errors |
+| Lint clean | `npm run lint` | No lint errors |
+| Unit tests pass | `npm test` | All tests pass |
+| Coverage met | `npm test -- --coverage` | Coverage ≥ 80% for services |
+| Dev server starts | `npm run dev` | Server starts without errors |
+
+### Final Verification
+
+| Check | Command to Run | Expected Result |
+|-------|----------------|-----------------|
+| **Frontend page loads** | Open browser to `localhost:PORT` | Page renders without errors |
+| **Backend API responds** | `curl localhost:PORT/api/health` or similar | API responds with 200 |
+| **Database connection** | Check application logs | No database connection errors |
+| Commits clear | `git log` | Each commit is a working state |
+| Summary updated | Review Implementation_Summary.md | Document reflects actual implementation |

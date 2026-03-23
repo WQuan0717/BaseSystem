@@ -333,8 +333,15 @@ Each phase has quality gates that must pass before proceeding:
 - [ ] Directory structure defined
 
 ### Development → Testing
-- [ ] Unit tests pass
-- [ ] Code compiles
+- [ ] Dependencies installed (`npm install` succeeds)
+- [ ] Entry point exists (`src/index.tsx` or equivalent)
+- [ ] Code compiles (`npm run build` succeeds)
+- [ ] Lint clean (`npm run lint` passes)
+- [ ] Unit tests pass (`npm test` succeeds)
+- [ ] Coverage met (≥ 80% for services)
+- [ ] Dev server starts (`npm run dev` succeeds)
+- [ ] Frontend page loads (browser verification)
+- [ ] Backend API responds (`curl localhost:PORT/api/health`)
 - [ ] No critical bugs
 
 ### Testing → Release
