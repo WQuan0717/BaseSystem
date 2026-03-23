@@ -60,14 +60,14 @@ User Request
 
 ## Phase Definition
 
-| Phase | Agent | Input | Output | Responsibility |
+| Phase | Skill | Input | Output | Responsibility |
 |-------|-------|-------|--------|----------------|
-| Requirements | Requirements Analyst | User ideas | Requirement.md | Define "what to do" |
-| Architecture | System Architect | Requirement.md | Design.md | Produce "decisions" |
-| Detailed Design | Detailed Designer | Design.md | DetailedDesign.md | Produce "specifications" |
-| Development | Full-stack Engineer | DetailedDesign.md | Code + Unit Tests | Produce "code" |
-| Testing | QA Engineer | Code + Tests | TestReport.md | Validate quality |
-| Documentation | Technical Writer | All docs + Codebase | README.md, API.md, etc. | Document project |
+| Requirements | `se-requirements` | User ideas | Requirement.md | Define "what to do" |
+| Architecture | `se-architecture` | Requirement.md | Design.md | Produce "decisions" |
+| Detailed Design | `se-detailed-design` | Design.md | DetailedDesign.md | Produce "specifications" |
+| Development | `se-development` | DetailedDesign.md | Code + Unit Tests | Produce "code" |
+| Testing | `se-testing` | Code + Tests | TestReport.md | Validate quality |
+| Documentation | `se-documentation` | All docs + Codebase | README.md, API.md, etc. | Document project |
 
 ## Phase Transition Rules
 
@@ -82,11 +82,11 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 
 | Current Phase | Subagent Returns | SOLO Coder Action |
 |---------------|------------------|-------------------|
-| Requirements | "Requirements complete: Requirement.md" | Invoke system-architect |
-| Architecture | "Architecture complete: Design.md" | Invoke detailed-designer |
-| Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke full-stack-engineer |
-| Development | "Development complete: Code + Tests" | Invoke qa-engineer |
-| Testing | "Testing complete: TestReport.md" | Invoke technical-writer |
+| Requirements | "Requirements complete: Requirement.md" | Invoke se-architecture |
+| Architecture | "Architecture complete: Design.md" | Invoke se-detailed-design |
+| Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-development |
+| Development | "Development complete: Code + Tests" | Invoke se-testing |
+| Testing | "Testing complete: TestReport.md" | Invoke se-documentation |
 | Documentation | "Documentation complete: All docs" | Report project done |
 
 ### Subagent Return Format
