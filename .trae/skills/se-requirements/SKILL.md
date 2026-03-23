@@ -45,11 +45,11 @@ Professional knowledge for requirements phase. Transform vague user ideas into s
 ### High-Value Questions
 
 **For vague ideas:**
-1. **Project Name**: What is the name of this project? (for initializing project context)
-2. Who are the main users? What core problem do they need to solve?
-3. Please describe the most core 1-2 business flows
-4. What features must be implemented in the first version?
-5. What is the expected user scale and data volume?
+1. 这个项目叫什么名字？
+2. 这个系统的主要使用者是谁？他们需要解决什么核心问题？
+3. 请描述一下最核心的 1-2 个业务流程是怎样的？
+4. 有没有哪些功能是必须在第一版就实现的？
+5. 预期的用户规模和数据量大概是多少？
 
 **For Excel workflows:**
 1. 你们目前的 Excel 流程主要是做什么的？
