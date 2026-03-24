@@ -105,6 +105,50 @@ Generate diagrams at appropriate phases:
 | Architecture | Architecture Diagram + ER Diagram | Invoke se-diagram |
 | Detailed Design | Class Diagram + Flowchart | Invoke se-diagram |
 
+### Optional Skills Decision Tree
+
+When optional Skills are needed, follow this decision tree:
+
+**1. Need UI/UX design system recommendations? (Design Decision Layer)**
+```
+ui-ux-pro-max → Returns style/color/typography suggestions
+       ↓
+frontend-design → Generates actual code based on recommendations
+```
+
+**2. Need to apply existing styles? (Application Layer)**
+| Scenario | Skill |
+|----------|-------|
+| Apply theme to slides/docs | `theme-factory` |
+| Apply Anthropic brand | `brand-guidelines` |
+| Create professional interface | `frontend-design` |
+
+**3. Need original visual creation? (Creation Layer)**
+| Scenario | Skill |
+|----------|-------|
+| Posters, art works | `canvas-design` |
+| Technical diagrams | `se-diagram` |
+
+**4. Need document formatting? (Document Layer)**
+| Scenario | Skill |
+|----------|-------|
+| Word document | `docx` |
+| PDF | `pdf` |
+| PowerPoint | `pptx` |
+| Excel spreadsheet | `xlsx` |
+
+**5. Need MCP integration? (Integration Layer)**
+| Scenario | Skill |
+|----------|-------|
+| Build MCP Server | `mcp-builder` |
+| Web app automation | `webapp-testing` |
+
+**6. Need subagent creation? (Agent Layer)**
+| Scenario | Skill |
+|----------|-------|
+| Create new Skill | `skill-creator` |
+| Create new subagent | `subagent-creator` |
+
 ### Subagent Return Format
 
 Each subagent MUST return to SOLO Coder with:
