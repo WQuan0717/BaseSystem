@@ -8,7 +8,7 @@
 
 Subagents are **dedicated agents** in Trae that can:
 - Execute independent tasks in parallel
-- Focus on specific domains (e.g., documentation)
+- Focus on specific domains
 - Each subagent has its own 40 MCP Tools quota
 
 ---
@@ -17,11 +17,7 @@ Subagents are **dedicated agents** in Trae that can:
 
 ### Use Cases (Parallel)
 
-1. **Documentation Generation** - Technical Writer runs parallel to development
-   - SOLO Coder implements code
-   - Technical Writer generates documentation simultaneously
-
-2. **MCP Tools Extension** - Break through 40 tool limit
+1. **MCP Tools Extension** - Break through 40 tool limit
    - Each subagent has independent 40 tools quota
    - SOLO Coder can indirectly use more tools
 
@@ -34,18 +30,14 @@ These phases **do NOT need subagents**, handled by SOLO Coder via Skills:
 | Requirements | SOLO Coder + se-requirements | Needs frequent user interaction |
 | Architecture | SOLO Coder + se-architecture | Needs overall control |
 | Detailed Design | SOLO Coder + se-detailed-design | Connects phases |
+| UI/UX Design | SOLO Coder + ui-ux-pro-max + frontend-design | Design system foundation |
 | Development | SOLO Coder + se-development | Core implementation |
 | Testing | SOLO Coder + webapp-testing | All-in-one testing toolkit |
+| Documentation | SOLO Coder + se-documentation | All-in-one documentation toolkit |
 
 ---
 
 ## Available Subagents
-
-### Business Agent (1)
-
-| Agent | Purpose | Config | MCP Tools |
-|-------|---------|--------|-----------|
-| **Technical Writer** | Documentation expert | `technical-writer.md` | 12 |
 
 ### Tool Agent (1)
 
@@ -53,7 +45,7 @@ These phases **do NOT need subagents**, handled by SOLO Coder via Skills:
 |-------|---------|--------|-----------|
 | **Agentic Optimizer** | Agent design optimization | `agentic-optimizer.md` | 11 |
 
-> 💡 **Note**: Agentic Optimizer is not a business agent, but a tool for designing and optimizing other agents.
+> 💡 **Note**: All business tasks are handled by Skills via SOLO Coder. Only use subagents for specialized tooling needs.
 
 ---
 
@@ -85,23 +77,20 @@ Let Agentic Optimizer help you design and optimize new agent configurations.
 
 ### 1. Number of Subagents
 
-- **Recommended**: 1 (Technical Writer)
-- **Maximum**: 2 (+ Optimizer for creating new agents)
-- **Avoid**: Too many subagents cause coordination difficulties
+- **Maximum**: 1 (Agentic Optimizer only)
+- **Avoid**: Multiple subagents cause coordination difficulties
+- **Prefer**: Use Skills via SOLO Coder for all business tasks
 
 ### 2. MCP Tools Allocation
 
 ```
 SOLO Coder:
 ├── se-* skills (core workflow)
+├── ui-ux-pro-max + frontend-design (UI/UX)
 ├── webapp-testing (testing)
+├── se-documentation (documentation)
 ├── mcp-builder (MCP development)
 └── other development tools
-
-Technical Writer:
-├── se-documentation
-├── docx/pdf (document formats)
-└── other writing tools
 ```
 
 ---
@@ -112,6 +101,7 @@ Technical Writer:
 - `.trae/skills/se-lifecycle/SKILL.md` - Workflow decisions
 - `.trae/skills/se-context/SKILL.md` - State management
 - `.trae/skills/webapp-testing/SKILL.md` - Testing toolkit
+- `.trae/skills/se-documentation/SKILL.md` - Documentation toolkit
 
 ---
 

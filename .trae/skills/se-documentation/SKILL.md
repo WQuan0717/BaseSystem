@@ -11,6 +11,29 @@ Professional knowledge for documentation phase. Generate comprehensive project d
 
 **Next Skill**: None (this is the final phase)
 
+## Documentation Workflow
+
+1. Read all project documents (Requirement.md, Design.md, DetailedDesign.md, TestReport.md)
+2. Analyze codebase structure and dependencies
+3. Extract key information (features, tech stack, APIs)
+4. Generate README.md with quick start guide
+5. Generate API.md with endpoint documentation
+6. Generate DEPLOYMENT.md with deployment guide
+7. Generate CONTRIBUTING.md with contribution guidelines
+8. Generate CHANGELOG.md with version history
+9. Verify all code examples and commands work
+10. Store documentation entity in Knowledge Graph (optional)
+11. **Report project completion with all documentation**
+
+## Knowledge Graph Operations (Optional)
+
+**Store after completion:**
+```
+mcp_Knowledge_Graph_Memory_create_entities(entities=[
+  {name: "Documentation_{date}", entityType: "Documentation", observations: ["readme", "api_docs", "deployment_guide", "contributing_guide"]}
+])
+```
+
 ## Core Principles
 
 ### Principle 1: User-Centric

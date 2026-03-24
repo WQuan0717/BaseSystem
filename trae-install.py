@@ -120,7 +120,7 @@ def verify_installation(target_dir: Path):
         "se-detailed-design",
         "se-development",
         "se-diagram",
-        "se-testing",
+        "webapp-testing",
         "se-documentation",
         "skill-creator"
     ]
@@ -163,7 +163,7 @@ def print_usage():
     print("  - se-lifecycle       工作流决策")
     print("  - se-context         状态管理")
     print("  - se-development     开发实现")
-    print("  - se-testing         测试验证")
+    print("  - webapp-testing     测试验证")
     print("\n💡 提示:")
     print("  在 Trae 对话中使用 'invoke se-xxx' 调用 Skills")
     print("="*60)
