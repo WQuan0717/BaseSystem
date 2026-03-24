@@ -41,7 +41,7 @@ SKILLS_RULES_TEMPLATE = """# {project_name} - Skills 使用规则
 | 🏗️ 架构 | `se-architecture` | 系统架构设计 |
 | 📐 详细设计 | `se-detailed-design` | 数据库和 API 设计 |
 | 💻 开发 | `se-development` | 代码实现 |
-| 🧪 测试 | `se-testing` | 测试验证 |
+| 🧪 测试 | `webapp-testing` | 测试验证 |
 | 📖 文档 | `se-documentation` | 文档生成 |
 | � 画图 | `se-diagram` | 图表生成（各阶段需要时） |
 | �💾 状态 | `se-context` | 状态管理（每个阶段后） |

@@ -66,7 +66,7 @@ User Request
 | Architecture | `se-architecture` | Requirement.md | Design.md | Produce "decisions" |
 | Detailed Design | `se-detailed-design` | Design.md | DetailedDesign.md | Produce "specifications" |
 | Development | `se-development` | DetailedDesign.md | Code + Unit Tests | Produce "code" |
-| Testing | `se-testing` | Code + Tests | TestReport.md | Validate quality |
+| Testing | `webapp-testing` | Code + Tests | TestReport.md | Validate quality |
 | Documentation | `se-documentation` | All docs + Codebase | README.md, API.md, etc. | Document project |
 
 ## Phase Transition Rules
@@ -85,7 +85,7 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 | Requirements | "Requirements complete: Requirement.md" | Invoke se-context (update phase) + Invoke se-architecture + Generate skills_rules |
 | Architecture | "Architecture complete: Design.md" | Invoke se-context (update phase) + Invoke se-detailed-design |
 | Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-context (update phase) + Invoke se-development |
-| Development | "Development complete: Code + Tests" | Invoke se-context (update phase) + Invoke se-testing |
+| Development | "Development complete: Code + Tests" | Invoke se-context (update phase) + Invoke webapp-testing |
 | Testing | "Testing complete: TestReport.md" | Invoke se-context (update phase) + Invoke se-documentation |
 | Documentation | "Documentation complete: All docs" | Invoke se-context (update phase) + Report project done |
 

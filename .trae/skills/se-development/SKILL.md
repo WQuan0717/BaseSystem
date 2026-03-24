@@ -9,7 +9,7 @@ Professional knowledge for development phase. Transform DetailedDesign.md into w
 
 **Previous Skill**: se-detailed-design (reads DetailedDesign.md)
 
-**Next Skill**: se-testing (after development is complete)
+**Next Skill**: webapp-testing (after development is complete)
 
 ## Core Principles
 

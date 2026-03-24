@@ -88,4 +88,4 @@
 
 ---
 
-*详细实践文档在各 Skills 中：se-development, se-testing, se-documentation*
+*详细实践文档在各 Skills 中：se-development, webapp-testing, se-documentation*
