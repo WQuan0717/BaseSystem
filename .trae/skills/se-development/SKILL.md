@@ -72,6 +72,37 @@ taskkill /F /PID <process_id>
 
 ## Vertical Slice Workflow
 
+### UI/UX Foundation (For Frontend Projects)
+
+**Before writing business code, establish UI/UX foundation:**
+
+1. **ui-ux-pro-max** - Query design system recommendations
+   ```bash
+   python3 skills/ui-ux-pro-max/scripts/search.py "<project type> <keywords>" --design-system
+   ```
+   - Returns style, color, typography suggestions
+   - Establishes visual language
+
+2. **frontend-design** - Generate UI code based on recommendations
+   - Create consistent components
+   - Establish design tokens (CSS variables)
+   - Build page layouts and interactions
+
+3. **se-development** - Business code implementation
+   - Vertical slice development based on established UI/UX
+   - UI components integrate with business logic
+
+**Flow:**
+```
+ui-ux-pro-max → frontend-design → se-development (vertical slices)
+```
+
+**Why this order?**
+- Consistent visual language across all slices
+- Design system established before implementation
+- Avoids "AI slop" aesthetics
+- Faster iteration with reusable components
+
 ### Slice Definition
 
 A vertical slice includes:
