@@ -19,6 +19,24 @@ Professional knowledge for development phase. Transform DetailedDesign.md into w
 - Mock data simulates backend responses
 - Frontend should be independently complete before backend starts
 
+### ⚠️ MANDATORY PHASE GATES
+
+**Before starting frontend development:**
+- [ ] UI/UX Design completed (ui-ux-pro-max + frontend-design)
+- [ ] Design system documented (colors, typography, components)
+
+**Before starting backend development:**
+- [ ] All frontend pages exist (check: `ls src/views/`)
+- [ ] Mock data structure exists (check: `ls src/mocks/`)
+- [ ] Frontend can run standalone with mock data
+
+**Before proceeding to testing:**
+- [ ] Backend features implemented with E2E tests
+- [ ] All E2E tests pass (including regression)
+- [ ] TestReport.md generated
+
+**⚠️ DO NOT skip these gates! Each gate MUST be verified before proceeding.**
+
 ### Principle 2: Backend Vertical Iteration
 - Backend developed feature by feature, not all at once
 - Each feature includes: API + Database operations + Business logic

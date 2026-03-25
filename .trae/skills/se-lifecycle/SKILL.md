@@ -92,8 +92,25 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 ### Required Actions After Each Phase
 
 1. **Update project state** - Invoke se-context to update phase status
-2. **Generate skills usage plan** - After requirements complete, check `.trae/skills/` and generate `.trae/rules/skills_rules.md`
-3. **Proceed to next phase** - Invoke next skill per transition protocol
+2. **Verify phase deliverables** - Check all required outputs exist before proceeding
+3. **Proceed to next phase** - Only after current phase deliverables verified
+
+### Phase Deliverables Checklist
+
+**MUST have ALL outputs before proceeding to next phase:**
+
+| Phase | Required Outputs | Check Command |
+|-------|------------------|---------------|
+| Requirements | Requirement.md + usecase.mmd | `ls docs/Requirement.md docs/diagrams/usecase.mmd` |
+| Architecture | Design.md + architecture.mmd + erdiagram.mmd | `ls docs/Design.md docs/diagrams/*.mmd` |
+| Detailed Design | DetailedDesign.md + classdiagram.mmd + flowchart.mmd | `ls docs/DetailedDesign.md docs/diagrams/*.mmd` |
+| UI/UX Design | Design system decisions (colors, typography, components) | Document in frontend/src/design/ |
+| Frontend Development | All pages with mock data (src/mocks/) | `ls src/mocks/` |
+| Backend Iteration | Each feature has API + tests + E2E verification | `ls tests/e2e/tests/*.spec.ts` |
+| Testing | TestReport.md with all P0 tests passed | `ls docs/TestReport.md` |
+| Documentation | README.md + API.md + DEPLOYMENT.md | `ls docs/README.md docs/API.md` |
+
+**⚠️ WARNING: Do NOT skip phases or proceed without deliverables verified!**
 
 ### Diagram Generation
 
