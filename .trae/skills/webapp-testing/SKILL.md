@@ -241,9 +241,20 @@ test('visual regression - homepage', async ({ page }) => {
 ## Test Report Template
 
 ```markdown
-# Test Report
+# System Test Report
 
-## Test Summary
+## 1. Test Report Information
+
+| Field | Value |
+|-------|-------|
+| Project Name | [Project Name] |
+| Test Report ID | TR-[YYYYMMDD]-[001] |
+| Test Date | [Date] |
+| Test Type | [System Test / Integration Test / E2E Test] |
+| Tester | [Name] |
+| Version | [Version] |
+
+## 2. Test Summary
 
 | Metric | Value |
 |--------|-------|
@@ -253,32 +264,89 @@ test('visual regression - homepage', async ({ page }) => {
 | Blocked | 0 |
 | Pass Rate | 0% |
 
-## Test Coverage
+## 3. Test Environment
 
-| Module | Coverage |
-|--------|----------|
-| Services | 0% |
-| Controllers | 0% |
-| API | 0% |
+| Component | Version |
+|-----------|---------|
+| OS | [Windows 11 / Ubuntu 24.04 / macOS] |
+| Browser | [Chrome 120 / Firefox 121 / Safari] |
+| Frontend | [http://localhost:5173] |
+| Backend | [http://localhost:8000] |
+| Database | [MySQL 8.0 / PostgreSQL 16] |
+| Test Framework | [Playwright / pytest] |
 
-## Defects Found
+## 4. Test Cases
 
-| ID | Severity | Description | Status |
-|----|----------|-------------|--------|
-| BUG-001 | High | [Description] | Open |
+### 4.1 Function Test Cases
 
-## Test Environment
+| TC ID | Module | Test Case Name | Priority | Precondition | Test Steps | Expected Result |
+|-------|--------|----------------|----------|--------------|------------|-----------------|
+| TC-001 | Auth | User login with valid credentials | P0 | User exists in system | 1. Navigate to login page<br>2. Enter valid email<br>3. Enter valid password<br>4. Click login button | Login successful, redirect to dashboard |
+| TC-002 | Auth | User login with invalid password | P0 | User exists in system | 1. Navigate to login page<br>2. Enter valid email<br>3. Enter invalid password<br>4. Click login button | Show error message, stay on login page |
+| TC-003 | Auth | User registration with valid data | P1 | - | 1. Navigate to register page<br>2. Fill all required fields<br>3. Click register button | Registration successful, redirect to login |
+| TC-004 | Article | Create new article | P0 | User logged in | 1. Click "New Article" button<br>2. Fill article title and content<br>3. Click "Publish" | Article created, appear in list |
+| TC-005 | Article | Delete existing article | P1 | User logged in, article exists | 1. Click delete button on article<br>2. Confirm deletion | Article removed from list |
 
-- **OS**: [Operating System]
-- **Browser**: [Browser Version]
-- **Database**: [Database Version]
-- **Test Date**: [Date]
+### 4.2 UI/Interaction Test Cases
 
-## Conclusion
+| TC ID | Module | Test Case Name | Priority | Test Steps | Expected Result |
+|-------|--------|----------------|----------|------------|-----------------|
+| TC-101 | Navigation | Main menu navigation | P0 | Click each menu item | Correct page loads |
+| TC-102 | Form | Form validation feedback | P1 | Submit empty form | Show validation errors |
+| TC-103 | Loading | Loading state display | P1 | Perform slow operation | Show loading indicator |
+| TC-104 | Error | Network error handling | P0 | Disconnect network, perform action | Show error message |
 
-⬜ Pass - Ready for release
-⬜ Conditional Pass - Minor issues to fix
-⬜ Fail - Critical issues found
+## 5. Test Results
+
+### 5.1 Function Test Results
+
+| TC ID | Execution Result | Actual Result | Execute Time | Tester | Notes |
+|-------|------------------|---------------|-------------|--------|-------|
+| TC-001 | PASS | Login successful, redirected to /dashboard | 1.2s | [Name] | - |
+| TC-002 | PASS | Error message "Invalid credentials" displayed | 0.8s | [Name] | - |
+| TC-003 | FAIL | Error 500 on submit | - | [Name] | Bug: BUG-001 |
+| TC-004 | PASS | Article created and displayed in list | 2.1s | [Name] | - |
+| TC-005 | PASS | Article removed from list | 1.5s | [Name] | - |
+
+### 5.2 UI/Interaction Test Results
+
+| TC ID | Execution Result | Actual Result | Screenshots |
+|-------|------------------|---------------|-------------|
+| TC-101 | PASS | All menu items navigate correctly | - |
+| TC-102 | PASS | Validation errors shown correctly | screenshots/TC-102.png |
+| TC-103 | PASS | Loading spinner displayed | screenshots/TC-103.png |
+| TC-104 | PASS | Error toast shown | screenshots/TC-104.png |
+
+## 6. Defect List
+
+| Bug ID | Severity | Module | Description | Status | Priority | Found in TC |
+|--------|----------|--------|-------------|--------|----------|-------------|
+| BUG-001 | High | Auth | User registration returns 500 error | Open | P0 | TC-003 |
+| BUG-002 | Medium | Article | Article list not sorted by date | Open | P1 | - |
+
+## 7. Test Coverage
+
+| Module | Coverage | Lines Covered | Total Lines |
+|--------|----------|---------------|-------------|
+| Auth | 95% | 190 | 200 |
+| Article | 88% | 220 | 250 |
+| Comment | 75% | 150 | 200 |
+| **Total** | **86%** | **560** | **650** |
+
+## 8. Conclusion
+
+⬜ **Pass** - All P0 test cases passed, ready for release
+⬜ **Conditional Pass** - Minor issues in P1, not blocking
+⬜ **Fail** - Critical issues found, need fix before release
+
+### Test Summary:
+- All critical (P0) test cases passed
+- Minor issues found in P1 tests, documented as known issues
+- System is ready for release
+
+### Recommendations:
+- Fix BUG-001 before production deployment
+- Consider adding more edge case tests for Article module
 ```
 
 ## Quality Checklist
