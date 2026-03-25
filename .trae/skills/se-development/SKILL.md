@@ -13,17 +13,25 @@ Professional knowledge for development phase. Transform DetailedDesign.md into w
 
 ## Core Principles
 
-### Principle 1: Vertical Slice Development
-- Each slice is a complete feature (frontend + backend + database)
-- Deliver working functionality incrementally
-- Avoid horizontal layering (all frontend, then all backend)
+### Principle 1: Frontend-First with Mock Data
+- Develop complete frontend first using mock data
+- Frontend includes all page layouts and interactions
+- Mock data simulates backend responses
+- Frontend should be independently complete before backend starts
 
-### Principle 2: Test-Driven Development
+### Principle 2: Backend Vertical Iteration
+- Backend developed feature by feature, not all at once
+- Each feature includes: API + Database operations + Business logic
+- After each feature, run E2E tests (including regression)
+- Next feature can only use already-tested features
+- Foundation features (auth, infrastructure) must be developed first
+
+### Principle 3: Test-Driven Development
 - Write unit tests alongside code
 - Coverage should be ≥ 80%
 - Test behavior, not implementation
 
-### Principle 3: Frontend Change Verification
+### Principle 4: Frontend Change Verification
 **MANDATORY: After ANY frontend modification, run:**
 1. Type check: `npm run type-check`
 2. ESLint: `npm run lint`
@@ -31,7 +39,7 @@ Professional knowledge for development phase. Transform DetailedDesign.md into w
 4. Playwright E2E tests: `cd tests/e2e && playwright test`
 5. Check screenshots in `tests/e2e/screenshots/`
 
-### Principle 4: Port Conflict Resolution
+### Principle 5: Port Conflict Resolution
 **Before starting services, check for port conflicts:**
 ```bash
 # Check port 8000 (backend)
@@ -45,34 +53,36 @@ netstat -ano | findstr :3000
 taskkill /F /PID <process_id>
 ```
 
-### Principle 5: Clean Code
+### Principle 6: Clean Code
 - Follow project conventions
 - Meaningful names, single responsibility
 - Small functions, clear intent
 
-### Principle 6: Incremental Delivery
+### Principle 7: Incremental Delivery
 - Commit frequently with clear messages
 - Each commit should be a working state
 - Use feature branches for isolation
 
-### Principle 7: Environment-Aware Configuration
+### Principle 8: Environment-Aware Configuration
 - Use environment variables for all API/interface URLs
 - Support multiple environments: local, Docker, production
 - Never hardcode interface URLs
 
-### Principle 8: WSL2 Compatibility
+### Principle 9: WSL2 Compatibility
 - Current environment: WSL2 (Ubuntu 24.04)
 - Use `ls -la` instead of `ls` to check files
 - Some tools may not work in WSL, use appropriate commands
 
-### Principle 9: Test File Management
+### Principle 10: Test File Management
 - Test files are never deleted after use
 - Create new test files in `test_to_be_deleted/` directory
 - This allows later review and reuse
 
-## Vertical Slice Workflow
+## Development Workflow (Frontend-First + Backend Vertical Iteration)
 
-### UI/UX Foundation (For Frontend Projects)
+This workflow combines the best of waterfall (complete frontend design first) and agile (vertical feature iteration).
+
+### Phase 1: UI/UX Foundation
 
 **Before writing business code, establish UI/UX foundation:**
 
@@ -88,65 +98,101 @@ taskkill /F /PID <process_id>
    - Establish design tokens (CSS variables)
    - Build page layouts and interactions
 
-3. **se-development** - Business code implementation
-   - Vertical slice development based on established UI/UX
-   - UI components integrate with business logic
+### Phase 2: Frontend Development (with Mock Data)
 
-**Flow:**
+**Goal: Complete all frontend before backend starts**
+
+1. **Create Mock Data Structure**
+   ```
+   src/mocks/
+   ├── data/           # Mock data files
+   │   ├── users.json
+   │   ├── articles.json
+   │   └── comments.json
+   ├── handlers/       # Mock API handlers
+   │   ├── auth.ts
+   │   ├── users.ts
+   │   ├── articles.ts
+   │   └── comments.ts
+   └── index.ts        # Mock server entry
+   ```
+
+2. **Mock Data Rules**
+   - Each API endpoint has a mock handler
+   - Mock data covers all possible responses (success, error, edge cases)
+   - Mock handlers mirror real API structure exactly
+   - Use realistic data, not "test1", "test2"
+
+3. **Frontend Development with Mock**
+   - All pages and components use mock API
+   - All interactions and states handled
+   - Loading, error, empty states all implemented
+   - Frontend is **independently complete**
+
+4. **Verify Frontend Completeness**
+   - All pages render correctly
+   - All interactions work
+   - All edge cases handled
+   - No placeholder comments like "// TODO: implement later"
+
+### Phase 3: Backend Vertical Iteration
+
+**Goal: Implement backend features one by one, each with full testing**
+
+**Backend Feature Order:**
 ```
-ui-ux-pro-max → frontend-design → se-development (vertical slices)
+1. Foundation (MUST be first)
+   ├── Authentication/Authorization
+   ├── Database connection
+   └── Basic API structure
+
+2. Core CRUD (based on frontend needs)
+   ├── User management
+   ├── Main entity operations
+   └── Related entity operations
+
+3. Business Logic
+   └── Complex features
 ```
 
-**Why this order?**
-- Consistent visual language across all slices
-- Design system established before implementation
-- Avoids "AI slop" aesthetics
-- Faster iteration with reusable components
-
-### Slice Definition
-
-A vertical slice includes:
-1. Database layer (Entity, Repository, Migration)
-2. Backend layer (Service, Controller, DTO)
-3. Frontend layer (Component, Hook, API call)
-4. Unit tests for each layer
-
-### Slice Order
-
-Order slices by:
-1. Core authentication/authorization
-2. Main business entities CRUD
-3. Business logic features
-4. Secondary features
-
-### Implementation Steps
-
-For each slice:
+**For Each Backend Feature:**
 
 ```
-1. Database Layer
-   ├── Create migration
-   ├── Define entity/model
-   ├── Create repository
-   └── Write repository tests
+1. Implement Feature
+   ├── Database layer (Entity, Migration)
+   ├── Service layer (Business logic)
+   ├── Controller layer (API endpoints)
+   └── DTO/Validation
 
-2. Backend Layer
-   ├── Define DTO
-   ├── Implement service
-   ├── Implement controller
-   └── Write unit tests
+2. Replace Mock with Real API
+   ├── Frontend calls real backend
+   ├── Remove mock import
+   └── Keep same interface
 
-3. Frontend Layer
-   ├── Create API client
-   ├── Create custom hook
-   ├── Implement component
-   └── Write component tests
+3. Run E2E Tests (REGRESSION REQUIRED)
+   ├── Current feature works
+   ├── All previous features still work
+   └── No regression in existing functionality
 
-4. Integration
-   ├── Run all tests
-   ├── Manual verification
-   └── Commit with message
+4. Commit
+   └── Clear message: "feat: implement user CRUD with E2E tests"
 ```
+
+### Why This Order?
+
+| Phase | Benefit |
+|-------|---------|
+| UI/UX Foundation | Consistent design system, no AI slop |
+| Frontend with Mock | Complete UI before backend, parallel work possible |
+| Backend Vertical | Each feature tested, no regression, agile iteration |
+
+### Comparison with Traditional Approaches
+
+| Approach | Frontend | Backend | Testing | Limitation |
+|----------|----------|---------|---------|-------------|
+| Traditional Waterfall | Incomplete until end | Late | Late | Frontend dependent on backend |
+| Traditional Vertical Slices | Mixed with backend | Mixed with frontend | Late | UI design inconsistent |
+| **This Approach** | Complete first | Feature by feature | After each feature | Best of both worlds |
 
 ## Code Standards
 
