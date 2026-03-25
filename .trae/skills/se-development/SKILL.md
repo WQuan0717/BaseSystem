@@ -39,7 +39,56 @@ Professional knowledge for development phase. Transform DetailedDesign.md into w
 4. Playwright E2E tests: `cd tests/e2e && playwright test`
 5. Check screenshots in `tests/e2e/screenshots/`
 
-### Principle 5: Port Conflict Resolution
+### Principle 5: Environment Setup Strategy
+
+**Database Services: Use Docker (start once, run long-term)**
+```bash
+# Start MySQL
+docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:8
+
+# Start Redis
+docker run -d --name redis -p 6379:6379 redis:7
+
+# Stop when done
+docker stop mysql redis
+```
+
+**Backend & Frontend: Use Local Development (fast iteration, easy debug)**
+```bash
+# Backend (local)
+cd backend && npm install && npm run dev
+
+# Frontend (local)
+cd frontend && npm install && npm run dev
+```
+
+**Why this strategy?**
+| Component | Docker | Local | Reason |
+|-----------|--------|-------|--------|
+| Database | ✅ Start once | ❌ Complex setup | Easy start/stop, no local install |
+| Backend | ❌ Rebuild image each time | ✅ Fast iteration | Quick code changes, hot reload |
+| Frontend | ❌ Rebuild image each time | ✅ Hot reload | Quick code changes, fast debug |
+
+**Connection strings:**
+```bash
+# Backend connects to Docker database
+DATABASE_URL=mysql://localhost:3306/mydb
+
+# Frontend connects to local backend
+VITE_API_BASE_URL=http://localhost:8000
+```
+
+**When to use Docker for backend/frontend:**
+- Production deployment
+- CI/CD pipelines
+- Testing exact production environment
+
+**When to use local development:**
+- During active development
+- Debugging
+- Quick iteration
+
+### Principle 6: Port Conflict Resolution
 **Before starting services, check for port conflicts:**
 ```bash
 # Check port 8000 (backend)
