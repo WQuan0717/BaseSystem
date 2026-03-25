@@ -273,6 +273,120 @@ playwright test
 # Screenshots saved in tests/e2e/screenshots/
 ```
 
+## E2E Test Examples
+
+E2E tests must test **real user operations**, not just page loading.
+
+### Login Test Example
+
+```typescript
+// tests/e2e/tests/auth.spec.ts
+import { test, expect } from '@playwright/test';
+
+test.describe('Authentication', () => {
+  test('user login with valid credentials', async ({ page }) => {
+    // 1. Navigate to login page
+    await page.goto('/login');
+
+    // 2. Fill in login form
+    await page.fill('#email', 'test@example.com');
+    await page.fill('#password', 'ValidPassword123');
+
+    // 3. Click login button
+    await page.click('button[type="submit"]');
+
+    // 4. Verify redirect to dashboard
+    await expect(page).toHaveURL('/dashboard');
+
+    // 5. Verify user info displayed
+    await expect(page.locator('.user-name')).toHaveText('Test User');
+  });
+
+  test('user login with invalid password shows error', async ({ page }) => {
+    await page.goto('/login');
+
+    await page.fill('#email', 'test@example.com');
+    await page.fill('#password', 'WrongPassword');
+    await page.click('button[type="submit"]');
+
+    // Verify error message
+    await expect(page.locator('.error-message')).toBeVisible();
+    await expect(page.locator('.error-message')).toContainText('Invalid credentials');
+  });
+});
+```
+
+### Registration Test Example
+
+```typescript
+test('user registration with valid data', async ({ page }) => {
+  // Generate unique email
+  const uniqueEmail = `user${Date.now()}@example.com`;
+
+  await page.goto('/register');
+
+  // Fill registration form
+  await page.fill('#username', 'newuser');
+  await page.fill('#email', uniqueEmail);
+  await page.fill('#password', 'SecurePass123');
+  await page.fill('#confirmPassword', 'SecurePass123');
+
+  // Submit
+  await page.click('button[type="submit"]');
+
+  // Verify success and redirect
+  await expect(page).toHaveURL('/login');
+  await expect(page.locator('.success-message')).toContainText('Registration successful');
+});
+```
+
+### Article CRUD Test Example
+
+```typescript
+test.describe('Article Management', () => {
+  let articleId: string;
+
+  test.beforeEach(async ({ page }) => {
+    // Login before each test
+    await page.goto('/login');
+    await page.fill('#email', 'admin@example.com');
+    await page.fill('#password', 'AdminPass123');
+    await page.click('button[type="submit"]');
+    await expect(page).toHaveURL('/dashboard');
+  });
+
+  test('create new article', async ({ page }) => {
+    await page.click('text=New Article');
+
+    await page.fill('#title', 'My Test Article');
+    await page.fill('#content', 'This is the article content...');
+    await page.click('text=Publish');
+
+    // Verify article appears in list
+    await expect(page.locator('article:has-text("My Test Article")')).toBeVisible();
+
+    // Get article ID for other tests
+    articleId = await page.locator('article').first().getAttribute('data-id');
+  });
+
+  test('delete existing article', async ({ page }) => {
+    // Navigate to article list
+    await page.click('text=My Articles');
+
+    // Find and delete the article
+    const article = page.locator(`article[data-id="${articleId}"]`);
+    await article.hover();
+    await article.locator('text=Delete').click();
+
+    // Confirm deletion
+    await page.click('text=Confirm Delete');
+
+    // Verify article removed
+    await expect(article).not.toBeVisible();
+  });
+});
+```
+
 ## Screenshot Comparison
 
 ```typescript
@@ -289,6 +403,18 @@ test('visual regression - homepage', async ({ page }) => {
   });
 });
 ```
+
+### Common Playwright Actions
+
+| Action | Code | Description |
+|--------|------|-------------|
+| Navigate | `await page.goto('/login')` | Go to URL |
+| Fill input | `await page.fill('#email', 'test@example.com')` | Type into input |
+| Click | `await page.click('button[type="submit"]')` | Click element |
+| Check text | `await expect(page.locator('.error')).toContainText('Error')` | Assert text |
+| Check URL | `await expect(page).toHaveURL('/dashboard')` | Assert URL |
+| Check visible | `await expect(page.locator('.success')).toBeVisible()` | Assert visibility |
+| Wait | `await page.waitForLoadState('networkidle')` | Wait for page load |
 
 ## Test Report Template
 
