@@ -14,7 +14,59 @@ Comprehensive testing toolkit that combines test case design methodology with Pl
 1. Design test cases using standard methods
 2. Execute tests using Playwright automation
 3. Generate TestReport.md
+4. Fix issues found
+5. Retest - verify fixes and check regression
+6. Repeat until all P0 issues are resolved
 ```
+
+## Test-Fix-Retest Cycle
+
+After generating TestReport.md, follow this cycle until ready for release:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Test Report Generated                                   │
+│  │                                                      │
+│  ├─ All P0 tests PASS? ──→ YES ──→ Ready for Release    │
+│  │                                                      │
+│  └─ P0 tests FAIL?                                      │
+│         │                                               │
+│         ↓                                               │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │  Fix Issues                                       │   │
+│  │  1. Analyze defect list                          │   │
+│  │  2. Fix code                                     │   │
+│  │  3. Re-run tests (current + regression)         │   │
+│  └─────────────────────────────────────────────────┘   │
+│         │                                               │
+│         ↓                                               │
+│  New Test Report Generated                              │
+│         │                                               │
+│         └───────────────────────────────────────────────┘
+```
+
+### Cycle Rules
+
+| Step | Action | Exit Condition |
+|------|--------|----------------|
+| 1 | Execute all tests | Generate TestReport.md |
+| 2 | Check P0 test results | If all PASS → Release |
+| 3 | Fix P0 issues | By priority order |
+| 4 | Re-run tests | Include regression tests |
+| 5 | Verify fixes | All P0 tests PASS |
+| 6 | Repeat | Until ready |
+
+### Release Criteria
+
+**MUST have ALL of:**
+- ✅ All P0 test cases PASS
+- ✅ Test coverage ≥ 80%
+- ✅ No critical/high severity bugs open
+- ✅ E2E tests pass
+- ✅ Visual regression tests pass
+
+**NICE to have:**
+- P1 test cases PASS (document as known issues if not)
 
 ## Test Case Design Methods
 
