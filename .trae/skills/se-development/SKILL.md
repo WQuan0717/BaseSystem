@@ -89,40 +89,87 @@ VITE_API_BASE_URL=http://localhost:8000
 - Quick iteration
 
 ### Principle 6: Port Conflict Resolution
-**Before starting services, check for port conflicts:**
-```bash
-# Check port 8000 (backend)
-netstat -ano | findstr :8000
 
-# Check port 3000 (frontend)
-netstat -ano | findstr :3000
+**SMART Decision Process for Port Conflicts:**
 
-# If port is occupied, kill the process and restart
-# DO NOT change to a different port
-taskkill /F /PID <process_id>
+```
+1. Check if service is already running in current terminal
+   ├─ YES: Use existing service (don't start new one)
+   └─ NO: Continue to step 2
+           ↓
+2. Check port conflict
+   └─ Port is FREE: Start service directly
+           ↓
+   Port is OCCUPIED: Analyze what is using it
+           ↓
+   ┌─────────────────────────────────────────┐
+   │  What is using the port?                 │
+   ├─────────────────────────────────────────┤
+   │  This Project's Service?                  │
+   │  ├─ YES: Kill existing process, use port │
+   │  │   (It should not be running twice)    │
+   │  │                                        │
+   │  └─ NO (Other project's service)          │
+   │      └─ Change to different port          │
+   │         (Don't kill other project's work) │
+   └─────────────────────────────────────────┘
 ```
 
-### Principle 6: Clean Code
+**Decision Rules:**
+
+| Situation | Action | Reason |
+|-----------|--------|--------|
+| Service already running in this terminal | Use existing | Don't duplicate |
+| Port occupied by THIS project | Kill process, reuse port | Should only run once |
+| Port occupied by OTHER project | Change to different port | Don't disrupt other work |
+
+**How to Check:**
+
+```bash
+# Step 1: Check if service is already running
+# Look at current terminal - is there a running dev server?
+
+# Step 2: Check what is using the port
+netstat -ano | findstr :8000
+
+# Example output:
+# TCP    0.0.0.0:8000    0.0.0.0:0    LISTENING    12345
+
+# Step 3: Check what process 12345 is
+tasklist /FI "PID eq 12345"
+# Or on Linux/Mac:
+# lsof -i :8000
+
+# Step 4: Analyze and decide
+# If it's node.exe/python.exe running YOUR project → Kill it
+# If it's another project's service → Change port
+```
+
+**Port Change Rule:**
+- This project ports: 3000 (frontend), 8000 (backend), 3306 (mysql), 6379 (redis)
+- If conflict and it's not this project: Change to 3001, 8001, 3307, 6378
+
+### Principle 7: Clean Code
 - Follow project conventions
 - Meaningful names, single responsibility
 - Small functions, clear intent
 
-### Principle 7: Incremental Delivery
+### Principle 8: Incremental Delivery
 - Commit frequently with clear messages
 - Each commit should be a working state
 - Use feature branches for isolation
 
-### Principle 8: Environment-Aware Configuration
+### Principle 9: Environment-Aware Configuration
 - Use environment variables for all API/interface URLs
 - Support multiple environments: local, Docker, production
 - Never hardcode interface URLs
 
-### Principle 9: WSL2 Compatibility
+### Principle 10: WSL2 Compatibility
 - Current environment: WSL2 (Ubuntu 24.04)
 - Use `ls -la` instead of `ls` to check files
 - Some tools may not work in WSL, use appropriate commands
 
-### Principle 10: Test File Management
+### Principle 11: Test File Management
 - Test files are never deleted after use
 - Create new test files in `test_to_be_deleted/` directory
 - This allows later review and reuse
