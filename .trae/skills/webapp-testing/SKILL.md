@@ -288,15 +288,15 @@ test.describe('Authentication', () => {
     // 1. Navigate to login page
     await page.goto('/login');
 
-    // 2. Fill in login form
-    await page.fill('#email', 'test@example.com');
-    await page.fill('#password', 'ValidPassword123');
+    // 2. Fill in login form - USE pressSequentially for real keyboard input
+    await page.locator('#email').pressSequentially('test@example.com', { delay: 50 });
+    await page.locator('#password').pressSequentially('ValidPassword123', { delay: 50 });
 
     // 3. Click login button
     await page.click('button[type="submit"]');
 
-    // 4. Verify redirect to dashboard
-    await expect(page).toHaveURL('/dashboard');
+    // 4. Wait for response and verify redirect
+    await page.waitForURL('**/dashboard', { timeout: 10000 });
 
     // 5. Verify user info displayed
     await expect(page.locator('.user-name')).toHaveText('Test User');
@@ -305,12 +305,13 @@ test.describe('Authentication', () => {
   test('user login with invalid password shows error', async ({ page }) => {
     await page.goto('/login');
 
-    await page.fill('#email', 'test@example.com');
-    await page.fill('#password', 'WrongPassword');
+    // Use pressSequentially for real keyboard input
+    await page.locator('#email').pressSequentially('test@example.com', { delay: 50 });
+    await page.locator('#password').pressSequentially('WrongPassword', { delay: 50 });
     await page.click('button[type="submit"]');
 
-    // Verify error message
-    await expect(page.locator('.error-message')).toBeVisible();
+    // Verify error message appears
+    await expect(page.locator('.error-message')).toBeVisible({ timeout: 5000 });
     await expect(page.locator('.error-message')).toContainText('Invalid credentials');
   });
 });
@@ -325,17 +326,17 @@ test('user registration with valid data', async ({ page }) => {
 
   await page.goto('/register');
 
-  // Fill registration form
-  await page.fill('#username', 'newuser');
-  await page.fill('#email', uniqueEmail);
-  await page.fill('#password', 'SecurePass123');
-  await page.fill('#confirmPassword', 'SecurePass123');
+  // Fill registration form - USE pressSequentially for real keyboard input
+  await page.locator('#username').pressSequentially('newuser', { delay: 50 });
+  await page.locator('#email').pressSequentially(uniqueEmail, { delay: 50 });
+  await page.locator('#password').pressSequentially('SecurePass123', { delay: 50 });
+  await page.locator('#confirmPassword').pressSequentially('SecurePass123', { delay: 50 });
 
   // Submit
   await page.click('button[type="submit"]');
 
-  // Verify success and redirect
-  await expect(page).toHaveURL('/login');
+  // Wait for success and redirect
+  await page.waitForURL('**/login', { timeout: 10000 });
   await expect(page.locator('.success-message')).toContainText('Registration successful');
 });
 ```
@@ -347,19 +348,20 @@ test.describe('Article Management', () => {
   let articleId: string;
 
   test.beforeEach(async ({ page }) => {
-    // Login before each test
+    // Login before each test - USE pressSequentially
     await page.goto('/login');
-    await page.fill('#email', 'admin@example.com');
-    await page.fill('#password', 'AdminPass123');
+    await page.locator('#email').pressSequentially('admin@example.com', { delay: 50 });
+    await page.locator('#password').pressSequentially('AdminPass123', { delay: 50 });
     await page.click('button[type="submit"]');
-    await expect(page).toHaveURL('/dashboard');
+    await page.waitForURL('**/dashboard', { timeout: 10000 });
   });
 
   test('create new article', async ({ page }) => {
     await page.click('text=New Article');
 
-    await page.fill('#title', 'My Test Article');
-    await page.fill('#content', 'This is the article content...');
+    // Use pressSequentially for real input
+    await page.locator('#title').pressSequentially('My Test Article', { delay: 50 });
+    await page.locator('#content').pressSequentially('This is the article content...', { delay: 50 });
     await page.click('text=Publish');
 
     // Verify article appears in list
@@ -406,15 +408,24 @@ test('visual regression - homepage', async ({ page }) => {
 
 ### Common Playwright Actions
 
+**⚠️ IMPORTANT: Always use pressSequentially for user input!**
+
 | Action | Code | Description |
 |--------|------|-------------|
 | Navigate | `await page.goto('/login')` | Go to URL |
-| Fill input | `await page.fill('#email', 'test@example.com')` | Type into input |
+| **Real keyboard input** | `await page.locator('#email').pressSequentially('test@example.com', {delay: 50})` | Type character by character |
+| Quick fill (no events) | `await page.fill('#email', 'test@example.com')` | Only for non-reactive inputs |
 | Click | `await page.click('button[type="submit"]')` | Click element |
 | Check text | `await expect(page.locator('.error')).toContainText('Error')` | Assert text |
-| Check URL | `await expect(page).toHaveURL('/dashboard')` | Assert URL |
+| Wait for URL | `await page.waitForURL('**/dashboard', {timeout: 10000})` | Wait for navigation |
+| Wait for element | `await page.locator('.success').waitFor({timeout: 5000})` | Wait for element |
 | Check visible | `await expect(page.locator('.success')).toBeVisible()` | Assert visibility |
-| Wait | `await page.waitForLoadState('networkidle')` | Wait for page load |
+
+**Why pressSequentially?**
+- `page.fill()` sets value directly without triggering keyboard events
+- Many frameworks (Vue, React) listen to `input` events
+- `pressSequentially()` types character by character, triggering real events
+- Simulates actual user behavior more accurately
 
 ## Test Report Template
 
