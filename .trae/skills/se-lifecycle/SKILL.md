@@ -62,6 +62,7 @@ User Request
 
 | Phase | Skill | Input | Output | Responsibility |
 |-------|-------|-------|--------|----------------|
+| **Spec** | `se-spec-mode` | User ideas | spec.md + tasks.md + checklist.md | Analyze requirements & plan |
 | Requirements | `se-requirements` | User ideas | Requirement.md | Define "what to do" |
 | Architecture | `se-architecture` | Requirement.md | Design.md | Produce "decisions" |
 | Detailed Design | `se-detailed-design` | Design.md | DetailedDesign.md | Produce "specifications" |
@@ -82,6 +83,7 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 
 | Current Phase | Subagent Returns | SOLO Coder Action |
 |---------------|------------------|-------------------|
+| Spec | "Spec complete: spec.md + tasks.md + checklist.md" | Invoke se-context (update phase) + Invoke se-requirements |
 | Requirements | "Requirements complete: Requirement.md" | Invoke se-context (update phase) + Invoke se-architecture + Generate skills_rules |
 | Architecture | "Architecture complete: Design.md" | Invoke se-context (update phase) + Invoke se-detailed-design |
 | Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-context (update phase) + Read se-development/WORKFLOW.md |
