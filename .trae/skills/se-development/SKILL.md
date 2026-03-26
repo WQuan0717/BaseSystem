@@ -249,29 +249,47 @@ This workflow combines the best of waterfall (complete frontend design first) an
    - All edge cases handled
    - No placeholder comments like "// TODO: implement later"
 
-### ⚠️ MANDATORY: QA Review After Frontend + Mock
+### ⚠️ MANDATORY: User Verification After Frontend + Mock
 
-**After frontend with mock data is complete, BEFORE starting backend:**
+**After frontend with mock data is complete:**
 
 ```
 Frontend + Mock Complete
     ↓
-Invoke QA Engineer (UI/UX Review)
+Frontend server is running (http://localhost:5173)
+Mock data is working
     ↓
-QA Engineer:
-- Takes screenshots
-- Evaluates visual design
-- Checks design consistency
-- Reports design issues
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 USER VERIFICATION POINT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Please verify the frontend:
+- Open http://localhost:5173
+- Test all pages and interactions
+- Check visual design and UX
+- Verify mock data flows correctly
+
+You can:
+1. Type "继续开发" to proceed to backend
+2. Type your feedback to request changes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If feedback received:
     ↓
-Development AI fixes design problems
+Development AI fixes issues
     ↓
-QA Engineer approves design
+QA Engineer (UI/UX Review) validates
+    ↓
+Back to user verification
+    ↓
+User says "继续开发"
     ↓
 ONLY THEN proceed to backend
 ```
 
 **Why this gate?**
+- User knows what they want better than AI
 - Early design issues are cheap to fix
 - Late design issues (after backend) are expensive
 - Frontend style should be finalized before backend integration
