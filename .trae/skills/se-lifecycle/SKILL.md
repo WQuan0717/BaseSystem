@@ -66,7 +66,7 @@ User Request
 | Architecture | `se-architecture` | Requirement.md | Design.md | Produce "decisions" |
 | Detailed Design | `se-detailed-design` | Design.md | DetailedDesign.md | Produce "specifications" |
 | Development | `se-development` | DetailedDesign.md | Code + Unit Tests | Produce "code" |
-| Testing | `webapp-testing` | Code + Tests | TestReport.md | Validate quality |
+| Testing | **QA Engineer** (independent) | Requirement.md + Code | TestReport.md | Validate quality |
 | Documentation | `se-documentation` | All docs + Codebase | README.md, API.md, etc. | Document project |
 
 ## Phase Transition Rules
@@ -85,7 +85,7 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 | Requirements | "Requirements complete: Requirement.md" | Invoke se-context (update phase) + Invoke se-architecture + Generate skills_rules |
 | Architecture | "Architecture complete: Design.md" | Invoke se-context (update phase) + Invoke se-detailed-design |
 | Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-context (update phase) + Invoke se-development |
-| Development | "Development complete: Code + Tests" | Invoke se-context (update phase) + Invoke webapp-testing |
+| Development | "Development complete: Code" | Invoke QA Engineer for testing |
 | Testing | "Testing complete: TestReport.md" | Invoke se-context (update phase) + Invoke se-documentation |
 | Documentation | "Documentation complete: All docs" | Invoke se-context (update phase) + Report project done |
 
@@ -393,10 +393,43 @@ Each phase has quality gates that must pass before proceeding:
 - [ ] API specifications complete
 - [ ] Directory structure defined
 
-### Development → Testing
-- [ ] Dependencies installed (`npm install` succeeds)
-- [ ] Entry point exists (`src/index.tsx` or equivalent)
-- [ ] Code compiles (`npm run build` succeeds)
+### Development → Testing (via QA Engineer)
+
+**⚠️ Development cannot test its own code. Use independent QA Engineer.**
+
+1. **Development completes feature**
+   - All code written
+   - Services started
+   - Ready for testing
+
+2. **Invoke QA Engineer subagent**
+   ```
+   QA Engineer will:
+   - Read Requirement.md
+   - Take UI screenshots
+   - Run E2E tests
+   - Evaluate UI/UX
+   - Report bugs in docs/TestReport.md
+   ```
+
+3. **QA Engineer reports bugs**
+   - If P0 bugs exist → Development must fix
+   - If P1/P2 → Document as known issues or fix
+
+4. **Development fixes bugs**
+   - Read docs/TestReport.md
+   - Fix P0 bugs first
+   - Request retest from QA Engineer
+
+5. **QA Engineer regression test**
+   - Pass → Approved for documentation phase
+   - Fail → Back to step 4
+
+**Approval Criteria for Testing:**
+- [ ] All P0 bugs fixed
+- [ ] All P1 bugs fixed or documented
+- [ ] UI/UX score >= 7/10
+- [ ] Regression tests pass
 - [ ] Lint clean (`npm run lint` passes)
 - [ ] Unit tests pass (`npm test` succeeds)
 - [ ] Coverage met (≥ 80% for services)

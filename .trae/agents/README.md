@@ -4,40 +4,65 @@
 
 ---
 
-## What is a Subagent?
+## Subagent Architecture
 
-Subagents are **dedicated agents** in Trae that can:
-- Execute independent tasks in parallel
-- Focus on specific domains
-- Each subagent has its own 40 MCP Tools quota
+This platform uses a **two-agent model**:
+
+| Agent | Role | Context |
+|-------|------|---------|
+| **SOLO Coder** | Development | Knows everything about implementation |
+| **QA Engineer** | Testing | Independent, only knows requirements |
+
+**Why separate?**
+```
+SOLO Coder (Development AI):
+- Implements features
+- Knows the code
+- Tends to say "it's done" without thorough testing
+
+QA Engineer (Testing AI):
+- Independent testing
+- Only knows requirements
+- Objectively finds bugs
+- Like a real QA engineer
+```
 
 ---
 
 ## When to Use Subagents
 
-### Use Cases (Parallel)
+### Use Case 1: QA Testing (RECOMMENDED)
 
-1. **MCP Tools Extension** - Break through 40 tool limit
-   - Each subagent has independent 40 tools quota
-   - SOLO Coder can indirectly use more tools
+**When development completes a feature or phase:**
+```
+SOLO Coder → Completes feature
+    ↓
+Invoke QA Engineer
+    ↓
+QA Engineer → Tests independently
+    ↓
+QA Engineer → Reports bugs in docs/TestReport.md
+    ↓
+SOLO Coder → Fixes bugs
+    ↓
+QA Engineer → Regression test
+    ↓
+Pass → Next phase
+```
 
-### Not Applicable (Sequential, handled by SOLO Coder)
+### Use Case 2: MCP Tools Extension
 
-These phases **do NOT need subagents**, handled by SOLO Coder via Skills:
-
-| Phase | Handler | Reason |
-|-------|---------|--------|
-| Requirements | SOLO Coder + se-requirements | Needs frequent user interaction |
-| Architecture | SOLO Coder + se-architecture | Needs overall control |
-| Detailed Design | SOLO Coder + se-detailed-design | Connects phases |
-| UI/UX Design | SOLO Coder + ui-ux-pro-max + frontend-design | Design system foundation |
-| Development | SOLO Coder + se-development | Core implementation |
-| Testing | SOLO Coder + webapp-testing | All-in-one testing toolkit |
-| Documentation | SOLO Coder + se-documentation | All-in-one documentation toolkit |
+If you need more than 40 tools, use subagents.
 
 ---
 
 ## Available Subagents
+
+### Business Agent (1)
+
+| Agent | Purpose | Config | MCP Tools |
+|-------|---------|--------|-----------|
+| **QA Engineer** | Independent testing | `qa-engineer.md` | 20 |
 
 ### Tool Agent (1)
 
@@ -45,52 +70,157 @@ These phases **do NOT need subagents**, handled by SOLO Coder via Skills:
 |-------|---------|--------|-----------|
 | **Agentic Optimizer** | Agent design optimization | `agentic-optimizer.md` | 11 |
 
-> 💡 **Note**: All business tasks are handled by Skills via SOLO Coder. Only use subagents for specialized tooling needs.
+---
+
+## QA Engineer Workflow
+
+### Step 1: Development Completes
+
+```
+SOLO Coder completes feature X
+    ↓
+SOLO Coder says: "Please test feature X"
+```
+
+### Step 2: QA Starts Testing
+
+```
+QA Engineer reads Requirement.md
+QA Engineer reviews deliverables
+QA Engineer starts services
+QA Engineer takes UI screenshots
+QA Engineer runs E2E tests
+QA Engineer evaluates UI/UX
+```
+
+### Step 3: QA Reports
+
+```
+QA Engineer writes docs/TestReport.md
+QA Engineer lists all bugs found
+QA Engineer gives approval or rejection
+```
+
+### Step 4: Development Fixes
+
+```
+SOLO Coder reads docs/TestReport.md
+SOLO Coder fixes P0 bugs first
+SOLO Coder says: "Fixed, please retest"
+```
+
+### Step 5: QA Regression
+
+```
+QA Engineer runs regression tests
+QA Engineer verifies fixes
+Pass → "Approved for next phase"
+Fail → Back to Step 4
+```
 
 ---
 
-## How to Create a Subagent
+## QA Engineer Testing Scope
+
+| Category | What QA Tests |
+|----------|---------------|
+| **Functionality** | Does it work as specified? |
+| **UI/UX** | Is it visually consistent and intuitive? |
+| **Interaction** | Does user know what to do? |
+| **Error Handling** | Are errors caught and shown? |
+| **Performance** | Is it fast enough? |
+
+---
+
+## Approval Criteria
+
+**Development can proceed ONLY when:**
+
+| Criterion | Requirement |
+|-----------|-------------|
+| P0 Bugs | 0 remaining |
+| P1 Bugs | All fixed OR documented as known issues |
+| UI/UX Score | >= 7/10 |
+| Regression | All previous features still work |
+
+---
+
+## How to Create QA Engineer Subagent
 
 ### Step 1: In Trae Settings
 
 1. Open Trae Settings
 2. Go to "Subagents" configuration
 3. Click "Create New Subagent"
-4. Copy the **three-section content** from the config file:
-   - ## 提示词 (Prompt)
-   - ## 何时调用 (When to Invoke)
-   - ## 需要启用的 MCP 工具 (MCP Tools to Enable)
-5. Save and enable
+4. Name it "QA Engineer"
+5. Copy content from `agents/qa-engineer.md`
+6. Save and enable
 
-### Step 2: Using Agentic Optimizer
+### Step 2: Enable Playwright MCP
 
-```bash
-# Invoke in Trae
-invoke agentic-optimizer
-```
-
-Let Agentic Optimizer help you design and optimize new agent configurations.
+QA Engineer needs Playwright tools for UI testing:
+- playwright_navigate
+- playwright_screenshot
+- playwright_click
+- playwright_fill
+- playwright_evaluate
 
 ---
 
-## Best Practices
-
-### 1. Number of Subagents
-
-- **Maximum**: 1 (Agentic Optimizer only)
-- **Avoid**: Multiple subagents cause coordination difficulties
-- **Prefer**: Use Skills via SOLO Coder for all business tasks
-
-### 2. MCP Tools Allocation
+## SOLO Coder Workflow (Updated)
 
 ```
-SOLO Coder:
-├── se-* skills (core workflow)
-├── ui-ux-pro-max + frontend-design (UI/UX)
-├── webapp-testing (testing)
-├── se-documentation (documentation)
-├── mcp-builder (MCP development)
+se-requirements → Requirement.md
+    ↓
+se-architecture → Design.md
+    ↓
+se-detailed-design → DetailedDesign.md
+    ↓
+ui-ux-pro-max + frontend-design → Design System
+    ↓
+SOLO Coder: Frontend + Mock Data
+    ↓
+SOLO Coder: Backend (feature by feature)
+    ↓
+┌─────────────────────────────────────┐
+│  QA Engineer (Independent Test)      │
+│  1. Test functionality               │
+│  2. Test UI/UX                      │
+│  3. Report bugs                     │
+│  4. Regression testing                │
+└─────────────────────────────────────┘
+    ↓ (Pass)
+SOLO Coder: Fix bugs if any
+    ↓
+┌─────────────────────────────────────┐
+│  QA Engineer (Final Test)           │
+└─────────────────────────────────────┘
+    ↓ (Pass)
+se-documentation → README.md, API.md
+    ↓
+Project Complete
+```
+
+---
+
+## MCP Tools Allocation
+
+```
+SOLO Coder (40 tools):
+├── se-lifecycle, se-context, se-requirements
+├── se-architecture, se-detailed-design
+├── se-development, frontend-design
+├── webapp-testing, se-documentation
+├── mcp_builder, skill-creator
 └── other development tools
+
+QA Engineer (40 tools):
+├── playwright_navigate, playwright_screenshot
+├── playwright_click, playwright_fill
+├── playwright_select, playwright_evaluate
+├── Read, Write, RunCommand
+├── Glob, Grep
+└── mcp_Knowledge_Graph_Memory_*
 ```
 
 ---
@@ -99,9 +229,8 @@ SOLO Coder:
 
 - `.trae/rules/project_rules.md` - Workflow rules
 - `.trae/skills/se-lifecycle/SKILL.md` - Workflow decisions
-- `.trae/skills/se-context/SKILL.md` - State management
-- `.trae/skills/webapp-testing/SKILL.md` - Testing toolkit
-- `.trae/skills/se-documentation/SKILL.md` - Documentation toolkit
+- `.trae/skills/se-development/SKILL.md` - Development process
+- `.trae/agents/qa-engineer.md` - QA Engineer config
 
 ---
 
