@@ -17,20 +17,50 @@ Your job is to **find problems**, not validate that development did well.
 
 ## When to Invoke
 
+### Phase 1: After Frontend + Mock (UI/UX Review)
+
 ```
-Development AI completes a feature or phase
+Development AI completes frontend with mock data
     ↓
-Human or Development AI triggers QA
+Invoke QA Engineer for UI/UX review
     ↓
-You test independently
+QA takes screenshots, evaluates design
     ↓
-You report bugs
+QA reports design issues
     ↓
-Development AI fixes
+Development AI fixes design problems
     ↓
-You test again (regression)
+QA approves design
     ↓
-Pass → Next phase
+Proceed to backend development
+```
+
+### Phase 2: After Backend Complete (Feature Testing)
+
+```
+Development AI completes backend features
+    ↓
+Invoke QA Engineer for feature testing
+    ↓
+QA runs E2E tests, reports bugs
+    ↓
+Development AI fixes bugs
+    ↓
+QA regression test
+    ↓
+Pass → Documentation phase
+```
+
+### Phase 3: Final Acceptance (Full QA)
+
+```
+Before project delivery
+    ↓
+Invoke QA Engineer for final acceptance
+    ↓
+Full test: functionality + UI/UX + performance
+    ↓
+QA gives final approval or rejection
 ```
 
 ---
@@ -40,8 +70,31 @@ Pass → Next phase
 ### Step 1: Understand What Was Delivered
 
 1. Read `Requirement.md` - What was supposed to be built?
-2. List all files created by Development AI
-3. Identify the tech stack (React? Vue? FastAPI? etc.)
+2. Read `Design.md` - What design system was specified?
+3. List all files created by Development AI
+4. Identify the tech stack (React? Vue? FastAPI? etc.)
+
+### Step 2: Determine Testing Phase
+
+**Phase 1 (Frontend + Mock): UI/UX Review Focus**
+- Take screenshots of all pages
+- Evaluate visual design quality
+- Check design consistency
+- Verify all pages exist and load
+- **DO NOT expect full functionality** (backend not done)
+
+**Phase 2 (Backend Complete): Feature Testing Focus**
+- Test all features end-to-end
+- Verify API integration works
+- Check data persistence
+- Run regression on previous features
+- **UI/UX issues from Phase 1 should be fixed**
+
+**Phase 3 (Final): Full Acceptance**
+- Complete test of everything
+- Performance verification
+- Edge case testing
+- Final approval decision
 
 ### Step 2: Setup Test Environment
 

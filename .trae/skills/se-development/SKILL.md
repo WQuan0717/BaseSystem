@@ -249,6 +249,33 @@ This workflow combines the best of waterfall (complete frontend design first) an
    - All edge cases handled
    - No placeholder comments like "// TODO: implement later"
 
+### ⚠️ MANDATORY: QA Review After Frontend + Mock
+
+**After frontend with mock data is complete, BEFORE starting backend:**
+
+```
+Frontend + Mock Complete
+    ↓
+Invoke QA Engineer (UI/UX Review)
+    ↓
+QA Engineer:
+- Takes screenshots
+- Evaluates visual design
+- Checks design consistency
+- Reports design issues
+    ↓
+Development AI fixes design problems
+    ↓
+QA Engineer approves design
+    ↓
+ONLY THEN proceed to backend
+```
+
+**Why this gate?**
+- Early design issues are cheap to fix
+- Late design issues (after backend) are expensive
+- Frontend style should be finalized before backend integration
+
 ### Phase 3: Backend Vertical Iteration
 
 **Goal: Implement backend features one by one, each with full testing**
