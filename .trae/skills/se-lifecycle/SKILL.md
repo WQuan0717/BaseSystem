@@ -65,7 +65,7 @@ User Request
 | Requirements | `se-requirements` | User ideas | Requirement.md | Define "what to do" |
 | Architecture | `se-architecture` | Requirement.md | Design.md | Produce "decisions" |
 | Detailed Design | `se-detailed-design` | Design.md | DetailedDesign.md | Produce "specifications" |
-| Development | `se-development` | DetailedDesign.md | Code + Unit Tests | Produce "code" |
+| Development | `se-development/WORKFLOW.md` | DetailedDesign.md | Code + Unit Tests | Produce "code" |
 | Testing | **QA Engineer** (independent) | Requirement.md + Code | TestReport.md | Validate quality |
 | Documentation | `se-documentation` | All docs + Codebase | README.md, API.md, etc. | Document project |
 
@@ -84,7 +84,7 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 |---------------|------------------|-------------------|
 | Requirements | "Requirements complete: Requirement.md" | Invoke se-context (update phase) + Invoke se-architecture + Generate skills_rules |
 | Architecture | "Architecture complete: Design.md" | Invoke se-context (update phase) + Invoke se-detailed-design |
-| Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-context (update phase) + Invoke se-development |
+| Detailed Design | "Detailed design complete: DetailedDesign.md" | Invoke se-context (update phase) + Read se-development/WORKFLOW.md |
 | Development | "Development complete: Code" | Invoke QA Engineer for testing |
 | Testing | "Testing complete: TestReport.md" | Invoke se-context (update phase) + Invoke se-documentation |
 | Documentation | "Documentation complete: All docs" | Invoke se-context (update phase) + Report project done |
@@ -111,6 +111,65 @@ SOLO Coder → Subagent → Complete → Return to SOLO Coder → Next Subagent
 | Documentation | README.md + API.md + DEPLOYMENT.md | `ls docs/README.md docs/API.md` |
 
 **⚠️ WARNING: Do NOT skip phases or proceed without deliverables verified!**
+
+## Development Phase (3-Phase Workflow)
+
+**The Development phase is divided into 3 sequential sub-phases:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ PHASE 1: Frontend UI/UX + Mock Data                   │
+│ Read: skills/se-development/PHASE1-frontend.md         │
+│ Gate: QA approved + User said "继续开发"               │
+├─────────────────────────────────────────────────────────┤
+│ PHASE 2: Backend Implementation                       │
+│ Read: skills/se-development/PHASE2-backend.md          │
+│ Gate: All features tested + QA approved                │
+├─────────────────────────────────────────────────────────┤
+│ PHASE 3: Handoff + Documentation                      │
+│ Read: skills/se-development/PHASE3-handoff.md          │
+│ Gate: All docs created + User accepts                  │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Phase 1: Frontend UI/UX + Mock Data
+
+**File:** `skills/se-development/PHASE1-frontend.md`
+
+**Goal:** Complete frontend with design system and mock data
+
+**Checkpoints before PHASE 2:**
+- [ ] Design system documented
+- [ ] All pages exist
+- [ ] Mock data structure exists
+- [ ] Frontend runs standalone
+- [ ] QA approved UI/UX
+- [ ] User said "继续开发"
+
+### Phase 2: Backend Implementation
+
+**File:** `skills/se-development/PHASE2-backend.md`
+
+**Goal:** Implement backend features one by one
+
+**Checkpoints before PHASE 3:**
+- [ ] All features implemented
+- [ ] All E2E tests pass
+- [ ] QA approved
+- [ ] User said "继续开发"
+
+### Phase 3: Handoff + Documentation
+
+**File:** `skills/se-development/PHASE3-handoff.md`
+
+**Goal:** Prepare for user delivery
+
+**Completion:**
+- [ ] README.md
+- [ ] API.md
+- [ ] DEPLOYMENT.md
+- [ ] Test accounts created
+- [ ] User accepts system
 
 ### Diagram Generation
 
