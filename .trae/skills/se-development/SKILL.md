@@ -249,7 +249,7 @@ This workflow combines the best of waterfall (complete frontend design first) an
    - All edge cases handled
    - No placeholder comments like "// TODO: implement later"
 
-### ⚠️ MANDATORY: User Verification After Frontend + Mock
+### ⚠️ MANDATORY: QA + User Verification After Frontend + Mock
 
 **After frontend with mock data is complete:**
 
@@ -260,8 +260,28 @@ Frontend server is running (http://localhost:5173)
 Mock data is working
     ↓
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 USER VERIFICATION POINT
+PHASE 1: QA ENGINEER (UI/UX REVIEW)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QA Engineer:
+- Takes screenshots
+- Evaluates visual design
+- Checks design consistency
+- Reports design issues
+
+If issues found:
+    ↓
+Development AI fixes design problems
+    ↓
+QA Engineer validates fixes
+    ↓
+Until QA approves
+    ↓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 2: USER VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QA Approved - Frontend ready for user
 
 Please verify the frontend:
 - Open http://localhost:5173
@@ -279,7 +299,7 @@ If feedback received:
     ↓
 Development AI fixes issues
     ↓
-QA Engineer (UI/UX Review) validates
+QA Engineer validates
     ↓
 Back to user verification
     ↓
@@ -289,10 +309,10 @@ ONLY THEN proceed to backend
 ```
 
 **Why this gate?**
-- User knows what they want better than AI
+- QA provides objective review first
+- User then confirms from subjective perspective
 - Early design issues are cheap to fix
 - Late design issues (after backend) are expensive
-- Frontend style should be finalized before backend integration
 
 ### Phase 3: Backend Vertical Iteration
 
